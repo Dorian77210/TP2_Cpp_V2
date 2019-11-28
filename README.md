@@ -169,6 +169,9 @@ Fonctionnalités :
 -	Sauvegarde fichier
 -	Lire fichier
 -	Filtres de recherche
+- méthode pour recupérer le nombre de trajet simple et compose
+- méthode dans la classe Trajet "Est" 
+-Vider catalogue
 
 
 Format du fichier de sauvegarde
