@@ -10,6 +10,8 @@
 #if ! defined ( TRAJET_H )
 #define TRAJET_H
 //--------------------------------------------------- Interfaces utilisées
+#include <iostream>
+using namespace std;
 
 //------------------------------------------------------------- Constantes
 
