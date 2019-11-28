@@ -146,3 +146,51 @@ const Trajet * TrajetNumero(unsigned int numero) const
 Retourne le numero-ieme trajet dans la collection de trajets
 (1 = premier trajet, ..., taille courante = NombreDeTrajets() = dernier trajet).
 Contrat de performance : Si la collection est vide, cette méthode ne doit pas être appelé. Le numéro doit être compris entre 1 et la valeur retournée par NombreDeTrajets() incluse.
+
+Version 2
+
+nbTrajetSimple  nbTrajetCompose
+
+Index type Départ ; arrivée ; moyenTranport / nbTrajet ;
+
+
+Améliorations possibles : 
+
+-	Gérer les chaines de caractères avec « string »
+-	Entrée sortie pour les trajets
+-	Surcharge operateur << et >>
+-	Gérer les erreurs d’entrée (formatage)
+-	Catalogue vide
+-	Ajouter un paramètre pour savoir si le trajet est nouveau ou non
+
+Fonctionnalités :
+
+-	Menue de sauvegarde ou de restitution 
+-	Sauvegarde fichier
+-	Lire fichier
+-	Filtres de recherche
+- méthode pour recupérer le nombre de trajet simple et compose
+- méthode dans la classe Trajet "Est" 
+-Vider catalogue
+
+
+Format du fichier de sauvegarde
+2 1
+
+1 1 A;B;HHHH
+4 2 A;B;6 // prendre longueur
+    2 B;T;5
+        1 1;D;D
+        1 1;D;D
+        1 1;D;D
+        
+
+        1 2;D;D;2
+            ...
+            ...
+        1 1;D;D
+
+Vider catalogue
+
+
+

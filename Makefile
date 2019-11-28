@@ -1,4 +1,5 @@
 CFLAGS = -ansi -pedantic -Wall -Werror -std=c++11
+CFLAGS_LINK = -pedantic -Wall -Werror -std=c++11
 
 CC = g++
 
@@ -13,11 +14,11 @@ OBJECTS_DBG := $(patsubst $(SRC)/%.cpp, $(OBJ)/$(DEBUG)/%.o, $(SOURCES))
 
 # executable sans option de debug
 release: $(OBJECTS)
-	$(CC) -o main $^ $(CFLAGS)
+	$(CC) -o main $^ $(CFLAGS_LINK)
 
 # executable avec options de debug + definition de la constante MAP
 debug: $(OBJECTS_DBG)
-	$(CC) -o main_debug $^ $(CFLAGS) -g -D MAP
+	$(CC) -o main_debug $^ $(CFLAGS_LINK) -g -D MAP
 
 $(OBJ)/$(RELEASE)/%.o: $(SRC)/%.cpp
 	mkdir -p $(OBJ)/$(RELEASE)

@@ -11,9 +11,10 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-using namespace std;
+
 #include <iostream>
 #include <cstddef>
+using namespace std;
 
 //------------------------------------------------------ Include personnel
 #include "../includes/CollectionTrajets.h"
