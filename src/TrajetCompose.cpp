@@ -56,7 +56,7 @@ void TrajetCompose::Afficher () const
     
 } //----- Fin de Afficher
 
-ostream & TrajetCompose::Serialize ( ostream & outStream ) const
+ostream & TrajetCompose::Serialise ( ostream & outStream ) const
 {
     return operator<<(outStream, *this);
 } // ----- Fin de Serialize
@@ -77,9 +77,9 @@ ostream & operator << ( ostream & outStream, const TrajetCompose & trajetCompose
     outStream << TRAJET_COMPOSE_IDENTIFIANT
               << " "
               << trajetCompose.VilleDepart()
-              << ";"
+              << DONNEES_SEPARATEUR
               << trajetCompose.VilleArrivee()
-              << ";"
+              << DONNEES_SEPARATEUR
               << tailleCollection
               << endl;
 
@@ -88,7 +88,7 @@ ostream & operator << ( ostream & outStream, const TrajetCompose & trajetCompose
     {
         const Trajet* trajet = trajets.TrajetNumero(i);
         outStream << i << " ";
-        trajet->Serialize(outStream);
+        trajet->Serialise(outStream);
     }
 
     return outStream;

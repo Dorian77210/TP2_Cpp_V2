@@ -30,9 +30,11 @@ void testConstructeur();
 void testConstructeur2();
 // Test du constructeur de TrajetSimple
 
+void testConstructeur3();
+// Test du constructeur de TrajetSimple
+
 void testConstructeurVillesCopiees();
 // Test du constructeur : vérifie que les villes sont bien
 // copiées dans le constructeur
-
 
 #endif // TTRAJETSIMPLE_H

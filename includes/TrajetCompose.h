@@ -45,7 +45,7 @@ public:
     // Format d'affichage :
     // « {trajet1.Afficher()} - {trajet2.Afficher()} - ...»
 
-    virtual ostream & Serialize ( ostream & outStream ) const;
+    virtual ostream & Serialise ( ostream & outStream ) const;
     // Mode d'emploi
     // Format:
     // 2 {villeDepart};{villeArrivee};{nbrTrajets}

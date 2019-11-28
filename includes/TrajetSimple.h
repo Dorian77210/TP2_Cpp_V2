@@ -21,6 +21,10 @@ typedef enum {
     TRAIN, AUTO, BATEAU, AVION, VELO, MARCHE
 } moyenDeTransport;
 
+const moyenDeTransport LISTE_MOYEN_DE_TRANSPORTS[6] = {
+    TRAIN, AUTO, BATEAU, AVION, VELO, MARCHE
+};
+
 //------------------------------------------------------------------------
 // Rôle de la classe <TrajetSimple>
 // Un trajet simple est un trajet caractérisée par une ville de départ,
@@ -45,7 +49,7 @@ public:
     // Format d'affichage :
     // « De {villeDepart} à {villeArrivee} en {moyenDeTransport} »
 
-    virtual ostream & Serialize ( ostream & outStream ) const;
+    virtual ostream & Serialise ( ostream & outStream ) const;
     // Mode d'emploi
     // Format d'affichage :
     // 1 {villeDepart};{villeArrivee};{moyenTransport}
@@ -73,6 +77,13 @@ public:
     // le moyen de transport donnés en paramètre.
     // Effectue une copie de la chaîne de caractères de laVilleDepart et
     // laVilleArrivee.
+
+    TrajetSimple ( string data );
+    // Mode d'emploi
+    // Constructeur à partir d'une chaîne de caractère
+    // Constraintes de performance :
+    // La chaîne doit être formée de cette façon : 
+    // "{villeDepart};{villeArrivee};{moyenTransport}"
 
     virtual ~TrajetSimple ( );
     // Mode d'emploi :

@@ -15,6 +15,9 @@ using namespace std;
 
 //------------------------------------------------------------- Constantes
 
+// Séparteur pour la sérailisation
+const string DONNEES_SEPARATEUR = ";";
+
 //------------------------------------------------------------------ Types
 enum TypeTrajet { TRAJET_SIMPLE, TRAJET_COMPOSE };
 //------------------------------------------------------------------------
@@ -42,7 +45,7 @@ public:
     // Affiche le trajet sur la sortie standard.
     // Le format est définie dans les classes descendantes.
 
-    virtual ostream & Serialize ( ostream & outStream ) const = 0;
+    virtual ostream & Serialise ( ostream & outStream ) const = 0;
     // Mode d'emploi:
     // Ecrit dans le flux outStream une version sérialisé du trajet courant
     // Le format d'écriture dépend des classes filles

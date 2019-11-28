@@ -46,7 +46,7 @@ void TrajetSimple::Afficher () const
     afficherMoyenDeTransport();
 } //----- Fin de Afficher
 
-ostream & TrajetSimple::Serialize ( ostream & outStream ) const
+ostream & TrajetSimple::Serialise ( ostream & outStream ) const
 {
     return operator<<(outStream, *this);
 } // ----- Fin de Serialize
@@ -91,6 +91,36 @@ TrajetSimple::TrajetSimple (
     strcpy(_villeDepart, laVilleDepart);
     strcpy(_villeArrivee, laVilleArrivee);
 } //----- Fin de TrajetSimple
+
+TrajetSimple::TrajetSimple( string data )
+// Algorithme : manipulation de chaînes de caractères
+{
+    #ifdef MAP
+        cout << "Appel au constructeur de <TrajetSimple> (" << data << ")" << endl;
+    #endif
+
+    string buffer;
+    // récupération de la ville de départ
+    size_t virguleIndex = data.find_first_of ( DONNEES_SEPARATEUR );
+
+    // traitement de la ville de depart
+    buffer = data.substr(0, virguleIndex);
+    _villeDepart = new char [ buffer.length() ];
+    strcpy ( _villeDepart, buffer.c_str() );
+
+    // traitement de la ville d'arrivee
+    data = data.substr(virguleIndex + 1);
+    virguleIndex = data.find_first_of( DONNEES_SEPARATEUR );
+    buffer = data.substr(0, virguleIndex);
+    _villeArrivee = new char [ buffer.length() ];
+    strcpy( _villeArrivee, buffer.c_str() );
+
+    // traitement du moyen de transport
+    data = data.substr(virguleIndex + 1);
+    unsigned int moyenDeTransportIndex ( stoul ( data ) );
+
+    _moyenDeTransport = LISTE_MOYEN_DE_TRANSPORTS [ moyenDeTransportIndex ];
+}
 
 TrajetSimple::~TrajetSimple ( )
 // Algorithme : Aucun

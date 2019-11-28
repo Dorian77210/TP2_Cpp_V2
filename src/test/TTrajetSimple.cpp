@@ -65,6 +65,16 @@ void testConstructeur2()
     // IJKLMNOP
 }
 
+void testConstructeur3()
+{
+    string data = "A;B;1";
+    TrajetSimple t(data);
+
+    t.Afficher();
+    // devrait afficher:
+    // De A à B en Train
+}
+
 void testConstructeurVillesCopiees()
 {
     const char villeDepart[] = "A";
@@ -82,6 +92,7 @@ int main()
 {
     testConstructeur();
     testConstructeur2();
+    testConstructeur3();
     testConstructeurVillesCopiees();
     return 0;
 }
