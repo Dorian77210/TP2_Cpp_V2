@@ -175,20 +175,12 @@ Fonctionnalités :
 
 
 Format du fichier de sauvegarde
-2 1
+Pour les trajets simples : 
+N 1 {villeDepart};{villeArrivee};{moyenTransport}
 
-1 1 A;B;HHHH
-4 2 A;B;6 // prendre longueur
-    2 B;T;5
-        1 1;D;D
-        1 1;D;D
-        1 1;D;D
-        
-
-        1 2;D;D;2
-            ...
-            ...
-        1 1;D;D
+Pour les trajets composés
+N 2 {villeDepart};{villeArrivee}
+    {trajets simples ou composés}
 
 Vider catalogue
 
