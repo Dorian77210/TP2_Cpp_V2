@@ -46,29 +46,26 @@ void TrajetSimple::Afficher () const
     afficherMoyenDeTransport();
 } //----- Fin de Afficher
 
-ostream & TrajetSimple::Serialise ( ostream & outStream ) const
-{
-    return operator<<(outStream, *this);
-} // ----- Fin de Serialize
-
 bool TrajetSimple::Est ( TypeTrajet type ) const
 {
     return type == TRAJET_SIMPLE;
 } // ----- Fin de Est
 
 //------------------------------------------------- Surcharge d'opérateurs
-ostream & operator << ( ostream & outStream, const TrajetSimple & trajet )
+TrajetSimple:: operator string ( ) const
 {
-    outStream << TRAJET_SIMPLE_IDENTIFIANT 
-              << " "
-              << trajet._villeDepart 
-              << ";" 
-              << trajet._villeArrivee
-              << ";"
-              << trajet._moyenDeTransport
-              << endl;
-    return outStream;
-} // ------- Fin de operator << (surcharge de l'opérateur de sortie)
+    string buffer = 
+              to_string ( TRAJET_SIMPLE_IDENTIFIANT ) 
+              + " "
+              + string( _villeDepart )
+              + ";" 
+              + string( _villeArrivee )
+              + ";"
+              + to_string( _moyenDeTransport )
+              + "\n\t";
+
+    return buffer;
+} // ------- Fin de operator string (surcharge de string)
 
 //-------------------------------------------- Constructeurs - destructeur
 TrajetSimple::TrajetSimple ( 
@@ -92,7 +89,7 @@ TrajetSimple::TrajetSimple (
     strcpy(_villeArrivee, laVilleArrivee);
 } //----- Fin de TrajetSimple
 
-TrajetSimple::TrajetSimple( string data )
+TrajetSimple::TrajetSimple( string & data )
 // Algorithme : manipulation de chaînes de caractères
 {
     #ifdef MAP
@@ -101,7 +98,7 @@ TrajetSimple::TrajetSimple( string data )
 
     string buffer;
     // récupération de la ville de départ
-    size_t virguleIndex = data.find_first_of ( DONNEES_SEPARATEUR );
+    size_t virguleIndex = data.find_first_of ( DONNEES_SEPARATEUR ), retourALigneIndex;
 
     // traitement de la ville de depart
     buffer = data.substr(0, virguleIndex);
@@ -117,10 +114,14 @@ TrajetSimple::TrajetSimple( string data )
 
     // traitement du moyen de transport
     data = data.substr(virguleIndex + 1);
-    unsigned int moyenDeTransportIndex ( stoul ( data ) );
+    retourALigneIndex = data.find_first_of ( "\n" );
+    buffer = data.substr( 0, retourALigneIndex );
+    unsigned int moyenDeTransportIndex ( stoul ( buffer ) );
+
+    data = data.substr ( retourALigneIndex + 1 );
 
     _moyenDeTransport = LISTE_MOYEN_DE_TRANSPORTS [ moyenDeTransportIndex ];
-}
+} // ---- Fin de TrajetSimple
 
 TrajetSimple::~TrajetSimple ( )
 // Algorithme : Aucun

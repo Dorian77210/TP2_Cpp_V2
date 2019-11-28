@@ -68,7 +68,7 @@ public:
     // par un nullptr
     // Elle sera utilisée dans le cas où nous ne voulons pas supprimer les trajets de la collection
 
-    CollectionTrajets GetTrajetsParType ( TypeTrajet type ) const;
+    CollectionTrajets GetTrajetsParType ( const TypeTrajet type ) const;
     // Mode d'emploi :
     // Cette méthode permet de filtrer la collection courante de trajets en fonction
     // du type de trajet
@@ -92,6 +92,10 @@ public:
     // La borne supérieure doit être comprise entre la borne inférieure et la taille de la collection
     // Les bornes inférieure et supérieure peuvent être égales, auquel cas la collection filtrée ne contiendra
     // qu'un seul trajet
+
+    unsigned int GetTotalParType ( const TypeTrajet type ) const;
+    // Mode d'emploi :
+    // Cette méthode permet de récupérer le nombre de trajets en fonction de leur type
 
 //------------------------------------------------- Surcharge d'opérateurs
 

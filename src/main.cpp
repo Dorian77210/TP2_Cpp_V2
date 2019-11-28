@@ -127,6 +127,7 @@ static void ajouterTrajetSimple ( Catalogue & leCatalogue )
     saisirMoyenDeTransport(leMoyenDeTransport, "Moyen de transport :");
     
     TrajetSimple *trajetSimple = new TrajetSimple(villeDepart, villeArrivee, leMoyenDeTransport);
+
     leCatalogue.AjouterTrajet(trajetSimple);
 }
 
@@ -232,6 +233,10 @@ int main ()
 {
     int choixMenu;
     Catalogue leCatalogue;
+    string data = "A;D;3\n1 A;D;0\n1 A;B;2\n2 A;D;1\n1 A;D;0";
+
+    TrajetCompose trajet ( data );
+    trajet.Afficher ( );
 
     while (true)
     {

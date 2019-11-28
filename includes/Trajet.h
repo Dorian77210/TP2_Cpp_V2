@@ -45,18 +45,34 @@ public:
     // Affiche le trajet sur la sortie standard.
     // Le format est définie dans les classes descendantes.
 
-    virtual ostream & Serialise ( ostream & outStream ) const = 0;
-    // Mode d'emploi:
-    // Ecrit dans le flux outStream une version sérialisé du trajet courant
-    // Le format d'écriture dépend des classes filles
-
     virtual bool Est ( const TypeTrajet type ) const = 0;
     // Mode d'emploi
     // Cette methode permet de connaître le type d'un trajet sans avoir recours
     // aux casts. Elle sera redéfinie dans les classes TrajetSimple et TrajetCompose.
 
-//------------------------------------------------- Surcharge d'opérateurs
+    //------------------------------------------------- Surcharge d'opérateurs
+    virtual operator string( ) const = 0;
+    // Mode d'emploi:
+    // Methode qui permet de sérialiser un trajet.
+    // Elle sera surchargée dans les classes enfants
 
+    // Surcharge de l'opérateur de sortie de flux
+    // Cette opérateur permet d'écrire un trajet dans un flux de sortie
+    // comme par exemple un fichier ou la sortie standard
+    // Le paramètre outStream correspond au flux de sortie dans lequel on va écrire
+    // Le paramètre trajet est le trajet qui sera écrit dans le flux de sortie
+    friend inline ostream & operator << ( ostream & outStream, const Trajet & trajet )
+    {
+        return outStream << static_cast<string>( trajet );
+    }
+
+    // Surcharge de l'opérateur += de la classe string
+    // Cette méthode permet d'ajouter au string courant la sérialisation du trajet
+    friend inline string operator + ( string data, const Trajet & trajet )
+    {
+        data += static_cast<string>(trajet);
+        return data;
+    }
 //-------------------------------------------- Constructeurs - destructeur
     Trajet ( );
     // Mode d'emploi :

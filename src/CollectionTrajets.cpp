@@ -94,7 +94,7 @@ void CollectionTrajets::Erase ( )
     }
 } // ----- Fin de Erase
 
-CollectionTrajets CollectionTrajets::GetTrajetsParType ( TypeTrajet type ) const
+CollectionTrajets CollectionTrajets::GetTrajetsParType ( const TypeTrajet type ) const
 // Algorithme : aucun
 {
     CollectionTrajets collectionTrajets;
@@ -157,6 +157,23 @@ CollectionTrajets CollectionTrajets::GetTrajetsParIntervalle ( const unsigned in
 
     return collectionTrajets;
 } // ---- Fin de GetTrajetsParIntervalle
+
+unsigned int CollectionTrajets::GetTotalParType ( const TypeTrajet type ) const
+{
+    unsigned int total ( 0 );
+    const Trajet *trajetCourant;
+
+    for ( unsigned int i ( 0 ); i < _nbElementCourant; i++ )
+    {
+        trajetCourant = _elements [ i ];
+        if ( trajetCourant->Est ( type ) )
+        {
+            total++;
+        }
+    }
+
+    return total;
+}
 
 //------------------------------------------------- Surcharge d'opérateurs
 

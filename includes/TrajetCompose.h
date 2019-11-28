@@ -43,15 +43,7 @@ public:
     virtual void Afficher () const;
     // Mode d'emploi :
     // Format d'affichage :
-    // « {trajet1.Afficher()} - {trajet2.Afficher()} - ...»
-
-    virtual ostream & Serialise ( ostream & outStream ) const;
-    // Mode d'emploi
-    // Format:
-    // 2 {villeDepart};{villeArrivee};{nbrTrajets}
-    //  {trajetNumero1}
-    // ...
-    //  {trajetNumeroN}
+    // « {trajet1.Afficher()} - {trajet2.Afficher()} - ...»    
 
     virtual bool Est ( const TypeTrajet type ) const;
     // Mode d'emploi :
@@ -59,12 +51,14 @@ public:
     // Elle renverra true si le type est égal à TRAJET_COMPOSE, sinon false
 
 //------------------------------------------------- Surcharge d'opérateurs
-    // Surcharge de l'opérateur de sortie de flux
-    // Cette opérateur permet d'écrire un trajet composé dans un flux de sortie
-    // comme par exemple un fichier ou la sortie standard
-    // Le paramètre outStream correspond au flux de sortie dans lequel on va écrire
-    // Le paramètre trajetSimple est le trajet composé qui sera écrit dans le flux de sortie
-    friend ostream & operator << ( ostream & outStream, const TrajetCompose & trajetCompose );
+    virtual operator string ( ) const;
+    // Donne une representation sérialisé d'un trajet composé
+    // Mode d'emploi
+    // Format:
+    // 2 {villeDepart};{villeArrivee};{nbrTrajets}
+    //  {trajetNumero1}
+    // ...
+    //  {trajetNumeroN}
 
 //-------------------------------------------- Constructeurs - destructeur
     TrajetCompose ( const CollectionTrajets & composants );
@@ -75,6 +69,18 @@ public:
     // 
     // Contrat de cohérence : la collection de trajets ne doit
     // pas être vide.
+
+    TrajetCompose ( string & data );
+    // Mode d'emploi
+    // Constructeur de la classe <TrajetCompose>.
+    // Construit les trajets à partir d'une chaîne de caractère data
+    // La chaîne de caratère doit correspondre au format suivant :
+    // "{villeDepart};{villeArrivee};{nbrDeTrajets}
+    //   {trajet1}
+    //   ...
+    //   {trajet nrbDeTrajets}
+    // ..."
+
 
     virtual ~TrajetCompose ( );
     // Mode d'emploi :

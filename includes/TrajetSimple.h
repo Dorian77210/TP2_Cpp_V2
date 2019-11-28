@@ -49,25 +49,19 @@ public:
     // Format d'affichage :
     // « De {villeDepart} à {villeArrivee} en {moyenDeTransport} »
 
-    virtual ostream & Serialise ( ostream & outStream ) const;
-    // Mode d'emploi
-    // Format d'affichage :
-    // 1 {villeDepart};{villeArrivee};{moyenTransport}
-
     virtual bool Est ( const TypeTrajet type ) const;
     // Mode d'emploi :
     // Cette méthode permet de savoir si le trajet courant est un trajet simple ou compose
     // Elle renverra true si le type est égal à TRAJET_SIMPLE, sinon false
 
-//------------------------------------------------- Surcharge d'opérateurs
-    // Surcharge de l'opérateur de sortie de flux
-    // Cette opérateur permet d'écrire un trajet simple dans un flux de sortie
-    // comme par exemple un fichier ou la sortie standard
-    // Le paramètre outStream correspond au flux de sortie dans lequel on va écrire
-    // Le paramètre trajetSimple est le trajet simple qui sera écrit dans le flux de sortie
-    friend ostream & operator << ( ostream & outStream, const TrajetSimple & trajetSimple );
+    //------------------------------------------------- Surcharge d'opérateurs
+    virtual operator string ( ) const;
+    // Mode d'emploi :
+    // Permet de donner une représentation sérialisée d'un trajet simple
+    // Le format de la sérialisation est de la forme suivante :
+    // {identifiantTrajetSimple} {villeDepart};{villeArrivee};{moyenDeTransport}
 
-//-------------------------------------------- Constructeurs - destructeur
+    //-------------------------------------------- Constructeurs - destructeur
     TrajetSimple ( 
         const char * laVilleDepart,
         const char * laVilleArrivee,
@@ -78,7 +72,7 @@ public:
     // Effectue une copie de la chaîne de caractères de laVilleDepart et
     // laVilleArrivee.
 
-    TrajetSimple ( string data );
+    TrajetSimple ( string & data );
     // Mode d'emploi
     // Constructeur à partir d'une chaîne de caractère
     // Constraintes de performance :

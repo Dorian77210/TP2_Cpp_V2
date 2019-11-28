@@ -1,4 +1,4 @@
-CFLAGS = -ansi -pedantic -Wall -Werror -std=c++11
+CFLAGS = -ansi -pedantic -Wall -Werror -std=c++11 -g
 CFLAGS_LINK = -pedantic -Wall -Werror -std=c++11
 
 CC = g++
