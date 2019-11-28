@@ -62,6 +62,37 @@ public:
     // Reajuste le tableau dynamique afin que la taille maximale
     // devienne égale à la taille courante.
 
+    void Erase ( void );
+    // Mode d'emploi
+    // Cette méthode permet remplacer l'ensemble des trajets dans le tableau de trajets
+    // par un nullptr
+    // Elle sera utilisée dans le cas où nous ne voulons pas supprimer les trajets de la collection
+
+    CollectionTrajets GetTrajetsParType ( TypeTrajet type ) const;
+    // Mode d'emploi :
+    // Cette méthode permet de filtrer la collection courante de trajets en fonction
+    // du type de trajet
+    // Elle sera utilisée lors de l'écriture des trajets en fonction du type de trajets
+    // choisi par l'utilisateur
+
+    CollectionTrajets GetTrajetsParVilles ( const string depart, const string arrivee = "" ) const;
+    // Mode d'emploi :
+    // Cette méthode permet de filtrer la collection courante de trajets en fonction
+    // de la ville de départ et de la ville d'arrivée
+    // Si la ville d'arrivée est vide, elle ne sera pas pris en compte dans le filtrage
+
+    CollectionTrajets GetTrajetsParIntervalle( const unsigned int borneInf, const unsigned int borneMax) const;
+    // Mode d'emploi :
+    // Cette méthode permet de filtrer la collection cpurante de trajets en fonction
+    // d'une borne inférieure et d'une borne supérieure.
+    //
+    // Constrat de performance :
+    // La collection courante de trajets ne doit pas être vide
+    // La borne inférieure doit être comprise entre 0 et la taille de la collection
+    // La borne supérieure doit être comprise entre la borne inférieure et la taille de la collection
+    // Les bornes inférieure et supérieure peuvent être égales, auquel cas la collection filtrée ne contiendra
+    // qu'un seul trajet
+
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur

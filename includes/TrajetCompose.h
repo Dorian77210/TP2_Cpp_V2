@@ -15,6 +15,9 @@
 
 //------------------------------------------------------------- Constantes
 
+// Identifiant pour l'écriture dans un fichier d'un trajet composé
+const unsigned int TRAJET_COMPOSE_IDENTIFIANT = 2;
+
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
@@ -42,7 +45,26 @@ public:
     // Format d'affichage :
     // « {trajet1.Afficher()} - {trajet2.Afficher()} - ...»
 
+    virtual ostream & Serialize ( ostream & outStream ) const;
+    // Mode d'emploi
+    // Format:
+    // 2 {villeDepart};{villeArrivee};{nbrTrajets}
+    //  {trajetNumero1}
+    // ...
+    //  {trajetNumeroN}
+
+    virtual bool Est ( const TypeTrajet type ) const;
+    // Mode d'emploi :
+    // Cette méthode permet de savoir si le trajet courant est un trajet simple ou compose
+    // Elle renverra true si le type est égal à TRAJET_COMPOSE, sinon false
+
 //------------------------------------------------- Surcharge d'opérateurs
+    // Surcharge de l'opérateur de sortie de flux
+    // Cette opérateur permet d'écrire un trajet composé dans un flux de sortie
+    // comme par exemple un fichier ou la sortie standard
+    // Le paramètre outStream correspond au flux de sortie dans lequel on va écrire
+    // Le paramètre trajetSimple est le trajet composé qui sera écrit dans le flux de sortie
+    friend ostream & operator << ( ostream & outStream, const TrajetCompose & trajetCompose );
 
 //-------------------------------------------- Constructeurs - destructeur
     TrajetCompose ( const CollectionTrajets & composants );

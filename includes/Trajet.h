@@ -14,7 +14,7 @@
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
-
+enum TypeTrajet { TRAJET_SIMPLE, TRAJET_COMPOSE };
 //------------------------------------------------------------------------
 // Rôle de la classe <Trajet>
 // La classe trajet est une classe abstraite qui promet
@@ -39,7 +39,17 @@ public:
     // Mode d'emploi :
     // Affiche le trajet sur la sortie standard.
     // Le format est définie dans les classes descendantes.
-     
+
+    virtual ostream & Serialize ( ostream & outStream ) const = 0;
+    // Mode d'emploi:
+    // Ecrit dans le flux outStream une version sérialisé du trajet courant
+    // Le format d'écriture dépend des classes filles
+
+    virtual bool Est ( const TypeTrajet type ) const = 0;
+    // Mode d'emploi
+    // Cette methode permet de connaître le type d'un trajet sans avoir recours
+    // aux casts. Elle sera redéfinie dans les classes TrajetSimple et TrajetCompose.
+
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur

@@ -16,6 +16,7 @@ using namespace std;
 
 //------------------------------------------------------ Include personnel
 #include "../includes/TrajetCompose.h"
+#include "../includes/CollectionTrajets.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -54,7 +55,43 @@ void TrajetCompose::Afficher () const
     
 } //----- Fin de Afficher
 
+ostream & TrajetCompose::Serialize ( ostream & outStream ) const
+{
+    return operator<<(outStream, *this);
+} // ----- Fin de Serialize
+
+bool TrajetCompose::Est ( const TypeTrajet type ) const 
+{
+    return type == TRAJET_COMPOSE;
+} // ----- Fin de Est
+
 //------------------------------------------------- Surcharge d'opérateurs
+
+ostream & operator << ( ostream & outStream, const TrajetCompose & trajetCompose)
+{
+    CollectionTrajets trajets = trajetCompose._trajets;
+    unsigned int tailleCollection = trajets.NombreDeTrajets( ), i;
+
+    // ecriture des informations concernant le trajet composé
+    outStream << TRAJET_COMPOSE_IDENTIFIANT
+              << " "
+              << trajetCompose.VilleDepart()
+              << ";"
+              << trajetCompose.VilleArrivee()
+              << ";"
+              << tailleCollection
+              << endl;
+
+    // ecriture des trajets qui composent le trajet composé
+    for( i = 1; i <= tailleCollection; i++)
+    {
+        const Trajet* trajet = trajets.TrajetNumero(i);
+        outStream << i << " ";
+        trajet->Serialize(outStream);
+    }
+
+    return outStream;
+}
 
 //-------------------------------------------- Constructeurs - destructeur
 TrajetCompose::TrajetCompose ( const CollectionTrajets & composants ) :

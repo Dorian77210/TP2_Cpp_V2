@@ -112,7 +112,7 @@ static void saisirMoyenDeTransport (
 
 static void afficherCatalogue ( Catalogue & leCatalogue )
 {
-    leCatalogue.Afficher();    
+    leCatalogue.Afficher();
 }
 
 static void ajouterTrajetSimple ( Catalogue & leCatalogue )
@@ -125,13 +125,8 @@ static void ajouterTrajetSimple ( Catalogue & leCatalogue )
     saisirVille(villeArrivee, TAILLE_MAX_VILLE, "Ville d'arrivée :");
     saisirMoyenDeTransport(leMoyenDeTransport, "Moyen de transport :");
     
-    leCatalogue.AjouterTrajet(
-        new TrajetSimple(
-            villeDepart, 
-            villeArrivee, 
-            leMoyenDeTransport
-        )
-    );
+    TrajetSimple *trajetSimple = new TrajetSimple(villeDepart, villeArrivee, leMoyenDeTransport);
+    leCatalogue.AjouterTrajet(trajetSimple);
 }
 
 static void ajouterTrajetCompose ( Catalogue & leCatalogue )
@@ -165,9 +160,10 @@ static void ajouterTrajetCompose ( Catalogue & leCatalogue )
     }
 
     if (trajets.NombreDeTrajets() > 0)
-        leCatalogue.AjouterTrajet(
-            new TrajetCompose(trajets)
-        );
+    {
+        TrajetCompose *trajetCompose = new TrajetCompose(trajets);
+        leCatalogue.AjouterTrajet(trajetCompose);
+    }
 }
 
 static void rechercherTrajet ( Catalogue & leCatalogue )

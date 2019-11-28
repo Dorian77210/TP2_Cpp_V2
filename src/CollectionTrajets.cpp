@@ -13,6 +13,7 @@
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
+#include <cstddef>
 
 //------------------------------------------------------ Include personnel
 #include "../includes/CollectionTrajets.h"
@@ -81,7 +82,80 @@ void CollectionTrajets::Ajuster ( )
     // Détruit l'ancien tableau
     delete [] _elements;
     _elements = nouveauTab;
-}
+} // ----- Fin de Ajuster
+
+void CollectionTrajets::Erase ( )
+// Algorithme : Aucun
+{
+    for ( unsigned int i ( 0 ); i < _nbElementCourant; i++ )
+    {
+        _elements [ i ] = nullptr;
+    }
+} // ----- Fin de Erase
+
+CollectionTrajets CollectionTrajets::GetTrajetsParType ( TypeTrajet type ) const
+// Algorithme : aucun
+{
+    CollectionTrajets collectionTrajets;
+    const Trajet* trajetCourant;
+
+    for ( unsigned int i ( 0 ); i < _nbElementCourant; i++ )
+    {
+        trajetCourant = _elements [ i ];
+        if ( trajetCourant->Est ( type ) )
+        {
+            collectionTrajets.AjouterTrajet ( trajetCourant );
+        }
+    }
+
+    return collectionTrajets;
+} // ------ Fin de GetTrajetsParType
+
+CollectionTrajets CollectionTrajets::GetTrajetsParVilles ( const string depart, const string arrivee ) const
+// Algorithme : aucun
+{
+    CollectionTrajets collectionTrajets;
+    const Trajet *trajetCourant;
+    const char *trajetCourantDepart, *trajetCourantArrivee;
+
+    for ( unsigned int i ( 0 ); i < _nbElementCourant; i++ ) 
+    {
+        trajetCourant = _elements [ i ];
+        trajetCourantDepart = trajetCourant->VilleDepart ();
+
+        if ( depart.compare ( trajetCourantDepart) == 0) // villes de departs égales
+        {
+            if ( arrivee.empty ( ) )
+            {
+                collectionTrajets.AjouterTrajet ( trajetCourant );
+            } else
+            {
+                trajetCourantArrivee = trajetCourant->VilleArrivee ();
+                if ( arrivee.compare ( trajetCourantArrivee ) == 0) // villes d'arrivee égales
+                {
+                    collectionTrajets.AjouterTrajet ( trajetCourant );
+                }
+            }
+        }
+    }
+
+    return collectionTrajets;
+} // --- Fin de GetTrajetsParVilles
+
+CollectionTrajets CollectionTrajets::GetTrajetsParIntervalle ( const unsigned int borneInf, const unsigned int borneSup ) const
+// Algorithme : aucun
+{
+    CollectionTrajets collectionTrajets;
+    const Trajet *trajetCourant;
+
+    for ( unsigned int i ( borneInf ); i <= borneSup; i++ )
+    {
+        trajetCourant = TrajetNumero ( i );
+        collectionTrajets.AjouterTrajet ( trajetCourant );
+    }
+
+    return collectionTrajets;
+} // ---- Fin de GetTrajetsParIntervalle
 
 //------------------------------------------------- Surcharge d'opérateurs
 

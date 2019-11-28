@@ -46,7 +46,29 @@ void TrajetSimple::Afficher () const
     afficherMoyenDeTransport();
 } //----- Fin de Afficher
 
+ostream & TrajetSimple::Serialize ( ostream & outStream ) const
+{
+    return operator<<(outStream, *this);
+} // ----- Fin de Serialize
+
+bool TrajetSimple::Est ( TypeTrajet type ) const
+{
+    return type == TRAJET_SIMPLE;
+} // ----- Fin de Est
+
 //------------------------------------------------- Surcharge d'opérateurs
+ostream & operator << ( ostream & outStream, const TrajetSimple & trajet )
+{
+    outStream << TRAJET_SIMPLE_IDENTIFIANT 
+              << " "
+              << trajet._villeDepart 
+              << ";" 
+              << trajet._villeArrivee
+              << ";"
+              << trajet._moyenDeTransport
+              << endl;
+    return outStream;
+} // ------- Fin de operator << (surcharge de l'opérateur de sortie)
 
 //-------------------------------------------- Constructeurs - destructeur
 TrajetSimple::TrajetSimple ( 
