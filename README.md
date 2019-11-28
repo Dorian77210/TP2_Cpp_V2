@@ -146,3 +146,5 @@ const Trajet * TrajetNumero(unsigned int numero) const
 Retourne le numero-ieme trajet dans la collection de trajets
 (1 = premier trajet, ..., taille courante = NombreDeTrajets() = dernier trajet).
 Contrat de performance : Si la collection est vide, cette méthode ne doit pas être appelé. Le numéro doit être compris entre 1 et la valeur retournée par NombreDeTrajets() incluse.
+
+Version 2
