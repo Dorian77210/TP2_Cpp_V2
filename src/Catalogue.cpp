@@ -11,13 +11,13 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-using namespace std;
+
 #include <iostream>
 #include <cstring>
 
 //------------------------------------------------------ Include personnel
 #include "../includes/Catalogue.h"
-
+using namespace std;
 //------------------------------------------------------------- Constantes
 
 //---------------------------------------------------- Variables statiques

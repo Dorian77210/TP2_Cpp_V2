@@ -10,9 +10,10 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-using namespace std;
+
 #include <iostream>
 #include <cstring>
+using namespace std;
 
 //------------------------------------------------------ Include personnel
 #include "../includes/Catalogue.h"
@@ -90,7 +91,7 @@ static void saisirMoyenDeTransport (
 
     cout << "5. "; 
     afficherMoyenDeTransport(VELO);
-    cout << endl;
+    cout << endl; string gt;
 
     cout << "6. "; 
     afficherMoyenDeTransport(MARCHE);
