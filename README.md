@@ -148,3 +148,29 @@ Retourne le numero-ieme trajet dans la collection de trajets
 Contrat de performance : Si la collection est vide, cette méthode ne doit pas être appelé. Le numéro doit être compris entre 1 et la valeur retournée par NombreDeTrajets() incluse.
 
 Version 2
+
+nbTrajetSimple  nbTrajetCompose
+
+Index type Départ ; arrivée ; moyenTranport / nbTrajet ;
+
+
+Améliorations possibles : 
+
+-	Gérer les chaines de caractères avec « string »
+-	Entrée sortie pour les trajets
+-	Surcharge operateur << et >>
+-	Gérer les erreurs d’entrée (formatage)
+-	Catalogue vide
+-	Ajouter un paramètre pour savoir si le trajet est nouveau ou non
+
+Fonctionnalités :
+
+-	Menue de sauvegarde ou de restitution 
+-	Sauvegarde fichier
+-	Lire fichier
+-	Filtres de recherche
+
+Vider catalogue
+
+
+
