@@ -236,6 +236,13 @@ static void sauvegarder ( Catalogue & catalogue )
     int choix;
     bool enTrainDeChoisir;
 
+    // on check si le catalogue est vide
+    if ( !catalogue.ContientTrajets ( ) )
+    {
+        cout << "Le catalogue est vide." << endl;
+        return;
+    }
+
     cout << "Quel sera le nom de votre fichier ? " << endl;
     cin >> nomFichier;
     cin.clear ( );
@@ -273,7 +280,6 @@ static void sauvegarder ( Catalogue & catalogue )
                 cout << "Le choix que vous avez fait est invalide. Veuillez saisir le nombre 1 pour écraser votre fichier ou 2 si vous ne voulez pas l'écraser" << endl;
             }
         }
-
     }
 
     // on propose à l'utilisateur les différentes options de sauvegarde
@@ -298,6 +304,21 @@ static void sauvegarder ( Catalogue & catalogue )
             {
                 cout << "Sauvegarde par défaut choisie." << endl;
                 
+                enTrainDeChoisir = false;
+            } else if ( choix == 2 )
+            {
+                cout << "Sauvegarde par type de trajets choisie." << endl;
+                // TODO : ajout d'une fonction pour séléctionner le type de trajet
+                enTrainDeChoisir = false;
+            } else if ( choix == 3 )
+            {
+                cout << "Sauvegarde selon une ville de départ et/ou d'arrivée choisie." << endl;
+                // TODO : ajout d'une fonction pour séléctionner le type de trajet
+                enTrainDeChoisir = false;
+            } else if ( choix == 4 )
+            {
+                cout << "Sauvegarde selon une séléction de trajets par un intervalle choisie." << endl;
+                // TODO : ajout d'une fonction pour séléectionner l'intervalle
                 enTrainDeChoisir = false;
             }
         } else

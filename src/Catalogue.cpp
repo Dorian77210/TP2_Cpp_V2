@@ -43,6 +43,11 @@ void Catalogue::Afficher () const
     }
 } //----- Fin de Afficher
 
+bool Catalogue::ContientTrajets ( ) const
+{
+    return !_trajets.EstVide ( );
+} // ------ Fin de ContientTrajets
+
 CollectionTrajets * Catalogue::Rechercher ( 
     const char * villeDepart,
     const char * villeArrivee) const

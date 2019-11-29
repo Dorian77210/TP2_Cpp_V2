@@ -47,6 +47,11 @@ public:
     // Format d'affichage :
     // {num} - {trajet.Affichage()}
 
+    bool ContientTrajets ( ) const;
+    // Mode d'emploi :
+    // Permet de savoir si le catalogue contient des trajets dans la collection.
+    // Elle renverra true si la collection est vide, sinon false 
+
     CollectionTrajets * Rechercher ( 
         const char * villeDepart, 
         const char * villeArrivee) const;
