@@ -19,7 +19,14 @@ using namespace std;
 const string DONNEES_SEPARATEUR = ";";
 
 //------------------------------------------------------------------ Types
+
+// enumération correspondant aux types de trajets
 enum TypeTrajet { TRAJET_SIMPLE, TRAJET_COMPOSE };
+
+const TypeTrajet TYPES_TRAJETS[6] = {
+    TRAJET_SIMPLE, TRAJET_COMPOSE
+};
+
 //------------------------------------------------------------------------
 // Rôle de la classe <Trajet>
 // La classe trajet est une classe abstraite qui promet

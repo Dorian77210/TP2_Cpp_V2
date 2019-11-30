@@ -43,7 +43,16 @@ void Catalogue::Afficher () const
     }
 } //----- Fin de Afficher
 
+<<<<<<< HEAD
 CollectionTrajets * Catalogue::Rechercher (
+=======
+bool Catalogue::ContientTrajets ( ) const
+{
+    return !_trajets.EstVide ( );
+} // ------ Fin de ContientTrajets
+
+CollectionTrajets * Catalogue::Rechercher ( 
+>>>>>>> 06855b12b7b08df39a47c95a63b9c49eab4e2acd
     const char * villeDepart,
     const char * villeArrivee) const
 // Algorithme : Boucle sur tous les trajet du catalogue et ajoute le

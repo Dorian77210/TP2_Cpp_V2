@@ -13,6 +13,10 @@
 
 #include <iostream>
 #include <cstring>
+#include <fstream>
+#include <string>
+#include <sstream>
+
 using namespace std;
 
 //------------------------------------------------------ Include personnel
@@ -226,6 +230,106 @@ static void rechercherCompletTrajet ( Catalogue & leCatalogue )
     delete[] trajetsTrouves;
 }
 
+static void sauvegarder ( Catalogue & catalogue )
+{
+    string nomFichier, buffer = "";
+    int choix;
+    bool enTrainDeChoisir;
+
+    // on check si le catalogue est vide
+    if ( !catalogue.ContientTrajets ( ) )
+    {
+        cout << "Le catalogue est vide." << endl;
+        return;
+    }
+
+    cout << "Quel sera le nom de votre fichier ? " << endl;
+    cin >> nomFichier;
+    cin.clear ( );
+    cin.ignore ( 80, '\n' );
+
+    // on check si le fichier existe deja
+    ifstream stream ( nomFichier.c_str() );
+    if ( stream.good ( ) )
+    {
+        // le fichier existe déjà, on propose à l'utilisateur de l'écraser ou non
+
+        enTrainDeChoisir = true;
+
+        while ( enTrainDeChoisir )
+        {
+            cout << "Le fichier " << nomFichier << " existe déjà. Voulez-vous l'écraser ?" << endl;
+            cout << "1. Oui \t 2. Non" << endl;
+            getline ( cin, buffer );
+
+            stringstream choixStream ( buffer );
+            if ( ( choixStream >> choix ) )
+            {
+                if ( choix == 1 ) 
+                {
+                    enTrainDeChoisir = false;
+                } else if ( choix == 2 )
+                {
+                    return; // on quitte la fonction
+                } else
+                {
+                    cout << "Le choix que vous avez fait est invalide. Veuillez saisir le nombre 1 pour écraser votre fichier ou 2 si vous ne voulez pas l'écraser" << endl;
+                }
+            } else
+            {
+                cout << "Le choix que vous avez fait est invalide. Veuillez saisir le nombre 1 pour écraser votre fichier ou 2 si vous ne voulez pas l'écraser" << endl;
+            }
+        }
+    }
+
+    // on propose à l'utilisateur les différentes options de sauvegarde
+    cout << "Nous allons procéder à la sauvegarde de votre catalogue. Voici les choix possibles : " << endl
+        << "1. Sans critère de sélection (sauvegarde complète du catalogue)" << endl
+        << "2. Selon le type de trajets (Simple ou Composé)" << endl
+        << "3. Selon la ville de départ et/ou d'arrivée" << endl
+        << "4. Selon une sélection de trajets (sauvegarde des trajets d'une borne inférieure à une borne supérieure)" << endl;
+    cout << "Attention, en cas de mauvaise saisie, l'option 1 sera sélectionnée par défaut." << endl;
+        
+    enTrainDeChoisir = true;
+
+    while ( enTrainDeChoisir )
+    {
+        cout << "Quelle option choisissez vous ?" << endl;
+        getline ( cin, buffer );
+
+        stringstream choixStream ( buffer );
+        if ( ( choixStream >> choix ) )
+        {
+            if ( choix == 1 )
+            {
+                cout << "Sauvegarde par défaut choisie." << endl;
+                
+                enTrainDeChoisir = false;
+            } else if ( choix == 2 )
+            {
+                cout << "Sauvegarde par type de trajets choisie." << endl;
+                // TODO : ajout d'une fonction pour séléctionner le type de trajet
+                enTrainDeChoisir = false;
+            } else if ( choix == 3 )
+            {
+                cout << "Sauvegarde selon une ville de départ et/ou d'arrivée choisie." << endl;
+                // TODO : ajout d'une fonction pour séléctionner le type de trajet
+                enTrainDeChoisir = false;
+            } else if ( choix == 4 )
+            {
+                cout << "Sauvegarde selon une séléction de trajets par un intervalle choisie." << endl;
+                // TODO : ajout d'une fonction pour séléectionner l'intervalle
+                enTrainDeChoisir = false;
+            }
+        } else
+        {
+            cout << "Sauvegarde par défaut choisie." << endl;
+            choix = 1;
+            enTrainDeChoisir = false;
+        }
+    }
+}
+
 //////////////////////////////////////////////////////////////////  PUBLIC
 
 //---------------------------------------------------- Fonctions publiques
@@ -233,10 +337,6 @@ int main ()
 {
     int choixMenu;
     Catalogue leCatalogue;
-    string data = "A;D;3\n1 A;D;0\n1 A;B;2\n2 A;D;1\n1 A;D;0";
-
-    TrajetCompose trajet ( data );
-    trajet.Afficher ( );
 
     while (true)
     {
@@ -246,6 +346,7 @@ int main ()
         cout << "\t3. Ajouter un trajet composé" << endl;
         cout << "\t4. Rechercher un trajet" << endl;
         cout << "\t5. Rechercher un trajet (complet)" << endl;
+        cout << "\t6. Sauvegarder le catalogue courant" << endl;
         cout << "\t0. Quitter" << endl;
 
         cin >> choixMenu;
@@ -269,6 +370,9 @@ int main ()
                 break;
             case 5:
                 rechercherCompletTrajet(leCatalogue);
+                break;
+            case 6:
+                sauvegarder ( leCatalogue );
                 break;
             case 0:
                 return 0;

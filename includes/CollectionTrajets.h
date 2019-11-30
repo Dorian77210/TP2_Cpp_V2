@@ -97,6 +97,14 @@ public:
     // Mode d'emploi :
     // Cette méthode permet de récupérer le nombre de trajets en fonction de leur type
 
+    inline bool EstVide ( ) const
+    {
+        return _nbElementCourant == 0;
+    }
+    // Mode d'emploi :
+    // Permet de savoir si la collection contient des trajetst ou non
+    // Le calcul se fait en comparant la taille courante à 0 ( _nbElementCourant == 0)
+
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
