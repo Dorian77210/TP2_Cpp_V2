@@ -77,14 +77,14 @@ TrajetCompose:: operator string ( ) const
             + string ( VilleArrivee() )
             + DONNEES_SEPARATEUR
             + to_string ( tailleCollection )
-            + "\n\t";
+            + "\n";
 
     // ecriture des trajets qui composent le trajet composé
     for( i = 1; i <= tailleCollection; i++)
     {
         const Trajet* trajet = trajets.TrajetNumero(i);
 
-        buffer += " " + *trajet;
+        buffer += *trajet;
     }
 
     return buffer;

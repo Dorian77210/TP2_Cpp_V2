@@ -375,6 +375,7 @@ int main ()
                 sauvegarder ( leCatalogue );
                 break;
             case 0:
+                leCatalogue.Sauvegarder("text.txt");
                 return 0;
         }
     }

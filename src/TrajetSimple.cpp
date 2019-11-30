@@ -62,7 +62,7 @@ TrajetSimple:: operator string ( ) const
               + string( _villeArrivee )
               + ";"
               + to_string( _moyenDeTransport )
-              + "\n\t";
+              + "\n";
 
     return buffer;
 } // ------- Fin de operator string (surcharge de string)

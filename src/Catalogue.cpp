@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <fstream>
 
 //------------------------------------------------------ Include personnel
 #include "../includes/Catalogue.h"
@@ -121,37 +122,50 @@ void Catalogue::RechercherComplet (
     delete[] uneCombinaison;
 }
 
-void Catalogue::Sauvegarder(const CollectionTrajets &c)
+void Catalogue::Sauvegarder(string nomFichier, const CollectionTrajets &c)
 {
     // ouvrir le fichier
+    ofstream monFlux(nomFichier.c_str());
 
-    // s'il exixte,
-    //for (int i = 0; i < ; ++i) {
+    if(monFlux)
+    {
+        // completer l'entete
+        unsigned int nbTrajetSimple = this->_trajets.GetTotalParType(TRAJET_SIMPLE);
+        unsigned int nbTrajetCompose= this->_trajets.GetTotalParType(TRAJET_COMPOSE);
 
-        // to string du trajet dans le fichier
+        monFlux << nbTrajetSimple << " " << nbTrajetCompose << endl;
 
-   // }
+        // ajouter les trajets
+        for (int i = 1; i <= this->_trajets.NombreDeTrajets(); ++i)
+        {
+            monFlux << i << " "; //index
+            monFlux << static_cast<string>(*this->_trajets.TrajetNumero(i));
+        }
+    }
+    else
+    {
+        cout << "ERREUR: Impossible d'ouvir le fichier" << endl;
+    }
 }
 
 void Catalogue::Sauvegarder(string nomFichier)
 {
-
-  this->Sauvegarder(this->_trajets);
+  this->Sauvegarder(nomFichier, this->_trajets);
 }
 
 void Catalogue::Sauvegarder(string nomFichier, TypeTrajet type)
 {
-    this->Sauvegarder(this->_trajets.GetTrajetsParType(type));
+    this->Sauvegarder(nomFichier, this->_trajets.GetTrajetsParType(type));
 }
 
 void Catalogue::Sauvegarder(string nomFichier, string depart, string arrivee)
 {
-    this->Sauvegarder(this->_trajets.GetTrajetsParVilles(depart, arrivee));
+    this->Sauvegarder(nomFichier, this->_trajets.GetTrajetsParVilles(depart, arrivee));
 }
 
 void Catalogue::Sauvegarder(string nomFichier, unsigned int debut, unsigned int fin)
 {
-    this->Sauvegarder(this->_trajets.GetTrajetsParIntervalle(debut, fin));
+    this->Sauvegarder(nomFichier, this->_trajets.GetTrajetsParIntervalle(debut, fin));
 }
 
 //------------------------------------------------- Surcharge d'opérateurs

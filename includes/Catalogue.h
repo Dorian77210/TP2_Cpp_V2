@@ -82,9 +82,7 @@ public:
     // éléments du tableau trajets sont aussi alloués dynamiquement
     // et devront aussi être libérés.
 
-
-
-    void Sauvegarder(const CollectionTrajets& c);
+    void Sauvegarder(string nomFichier, const CollectionTrajets &c);
     // Cette méthode permet de sauvegarder une collection de trajet dans un
     //fichier
 

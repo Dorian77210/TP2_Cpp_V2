@@ -23,7 +23,7 @@ const string DONNEES_SEPARATEUR = ";";
 // enumération correspondant aux types de trajets
 enum TypeTrajet { TRAJET_SIMPLE, TRAJET_COMPOSE };
 
-const TypeTrajet TYPES_TRAJETS[6] = {
+const TypeTrajet TYPES_TRAJETS[2] = {
     TRAJET_SIMPLE, TRAJET_COMPOSE
 };
 
