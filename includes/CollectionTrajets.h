@@ -83,7 +83,7 @@ public:
 
     CollectionTrajets GetTrajetsParIntervalle( const unsigned int borneInf, const unsigned int borneMax) const;
     // Mode d'emploi :
-    // Cette méthode permet de filtrer la collection cpurante de trajets en fonction
+    // Cette méthode permet de filtrer la collection courante de trajets en fonction
     // d'une borne inférieure et d'une borne supérieure.
     //
     // Constrat de performance :

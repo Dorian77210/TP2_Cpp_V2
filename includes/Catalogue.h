@@ -13,6 +13,7 @@
 //--------------------------------------------------- Interfaces utilisées
 #include "Trajet.h"
 #include "CollectionTrajets.h"
+#include <string>
 
 //------------------------------------------------------------- Constantes
 
@@ -20,8 +21,8 @@
 
 //------------------------------------------------------------------------
 // Rôle de la classe <Catalogue>
-// La classe Catalogue permet de gérer des trajets et de 
-// rechercher des trajets permettant de partir d'une ville 
+// La classe Catalogue permet de gérer des trajets et de
+// rechercher des trajets permettant de partir d'une ville
 // de départ jusqu'à une ville d'arrivée
 //------------------------------------------------------------------------
 class Catalogue
@@ -33,34 +34,34 @@ public:
     void AjouterTrajet ( const Trajet * unTrajet );
     // Mode d'emploi :
     // Permet d'ajouter le trajet unTrajet dans le catalogue.
-    // Le trajet doit être alloué dynamiquement en dehors de cette 
+    // Le trajet doit être alloué dynamiquement en dehors de cette
     // méthode avant d'être ajouté. Après son ajout, c'est l'instance
     // de Catalogue qui gère la destruction de ce trajet.
     // Contrat de cohérence :
-    // Le trajet doit être un trajet valide (pour un trajet composé, 
+    // Le trajet doit être un trajet valide (pour un trajet composé,
     // la ville d'arrivée d'un trajet doit être la ville de départ
     // du suivant.)
 
     void Afficher () const;
     // Mode d'emploi :
-    // Affiche tous les trajets du catalogue. 
+    // Affiche tous les trajets du catalogue.
     // Format d'affichage :
     // {num} - {trajet.Affichage()}
 
-    CollectionTrajets * Rechercher ( 
-        const char * villeDepart, 
+    CollectionTrajets * Rechercher (
+        const char * villeDepart,
         const char * villeArrivee) const;
     // Mode d'emploi :
-    // Retourne tous les trajet dont la ville de départ 
-    // et la ville d’arrivée sont celles données respectivement 
+    // Retourne tous les trajet dont la ville de départ
+    // et la ville d’arrivée sont celles données respectivement
     // en paramètre.
-    // 
-    // La collection de trajets sera alloué dynamiquement 
-    // dans la méthode et devra donc être libérés plus tard dans 
+    //
+    // La collection de trajets sera alloué dynamiquement
+    // dans la méthode et devra donc être libérés plus tard dans
     // le programme.
 
     void RechercherComplet (
-        const char * villeDepart, 
+        const char * villeDepart,
         const char * villeArrivee,
         CollectionTrajets **& trajets,
         unsigned int & nbTrajets ) const;
@@ -72,9 +73,36 @@ public:
     // et nbTrajets contiendra le nombre de combinaison.
     //
     // Le tableau trajets est alloué dynamiquement dans la méthode
-    // et devra donc être libérés plus tard dans le programme. Les 
+    // et devra donc être libérés plus tard dans le programme. Les
     // éléments du tableau trajets sont aussi alloués dynamiquement
     // et devront aussi être libérés.
+
+
+
+    void Sauvegarder(const CollectionTrajets& c);
+    // Cette méthode permet de sauvegarder une collection de trajet dans un
+    //fichier
+
+    void Sauvegarder(string nomFichier);
+    // permet de sauvegarder l'entièreté du catalogue
+    // cette méthode utilisera la méthode sauvegarder(const Collection& c) afin
+    //de finaliser la sauvegarder dans le fichier ayant pour nom "nomFichier"
+
+    void Sauvegarder(string nomFichier, TypeTrajet type);
+    // permet de sauvegarder le catalogue en le filtrant selon le type de
+    //trajets
+    //cette méthode utilisera la méthode sauvegarder(const Collection& c) afin
+    //de finaliser la sauvegarde dans le fichier ayant pour nom "nomFichier"
+
+    void Sauvegarder(string nomFichier, string depart, string arrivee);
+    // cette méthode permet de sauvegarder le catalogue en le filtrant selon
+    //le la ville depart et une ville de fin
+
+    void Sauvegarder(string nomFichier, unsigned int debut, unsigned int fin);
+    // cette méthode permet de sauvegarder le catalogue en le filtrant selon
+    //une interval
+
+
 
 //------------------------------------------------- Surcharge d'opérateurs
 
@@ -92,7 +120,7 @@ public:
 protected:
 //----------------------------------------------------- Méthodes protégées
     void combinaison(
-        const char * villeDepart, 
+        const char * villeDepart,
         const char * villeArrivee,
         bool * pris,
         unsigned int indexAPrendre,
