@@ -230,6 +230,46 @@ static void rechercherCompletTrajet ( Catalogue & leCatalogue )
     delete[] trajetsTrouves;
 }
 
+//static void chargerFichier(Catalogue & catalogue )
+//{
+
+//}
+
+static TypeTrajet selectionTypeTrajet()
+{
+    string buffer;
+    unsigned int typeTrajet;
+    cout << "Veuillez selectionné le type de trajet " << endl
+         << "1. Trajet simple" << endl
+         << "2. Trajet composé" << endl;
+    cout << "Attention, en cas de mauvaise saisie, l'option 1 sera sélectionnée par défaut." << endl;
+
+    getline(cin, buffer);
+    stringstream choixStream(buffer);
+
+    if (choixStream)
+    {
+        choixStream >> typeTrajet;
+        switch (typeTrajet)
+        {
+        case 1:
+            return TypeTrajet::TRAJET_SIMPLE;
+            break;
+        case 2:
+            return TypeTrajet::TRAJET_COMPOSE;
+            break;
+        default:
+            return TypeTrajet::TRAJET_SIMPLE;
+            break;
+        }
+    }
+    else
+    {
+        return TypeTrajet::TRAJET_SIMPLE;
+    }
+}
+
+
 static void sauvegarder ( Catalogue & catalogue )
 {
     string nomFichier, buffer = "";
@@ -303,17 +343,38 @@ static void sauvegarder ( Catalogue & catalogue )
             if ( choix == 1 )
             {
                 cout << "Sauvegarde par défaut choisie." << endl;
-                
+                catalogue.Sauvegarder(nomFichier);
                 enTrainDeChoisir = false;
             } else if ( choix == 2 )
             {
                 cout << "Sauvegarde par type de trajets choisie." << endl;
                 // TODO : ajout d'une fonction pour séléctionner le type de trajet
+                TypeTrajet trajetChoisi;
+                trajetChoisi = selectionTypeTrajet();
+                catalogue.Sauvegarder(nomFichier, trajetChoisi);
                 enTrainDeChoisir = false;
             } else if ( choix == 3 )
             {
                 cout << "Sauvegarde selon une ville de départ et/ou d'arrivée choisie." << endl;
-                // TODO : ajout d'une fonction pour séléctionner le type de trajet
+                // TODO : ajout d'une fonction pour séléctionner la ville de départ et d'arrivés
+                string villeDep= "";
+                string villeArr = "";
+
+                cout << "Saisissez la ville de départ. Note: laisser le champs vide si vous ne voulez pas de ville de depart";
+                cin >> villeDep;
+
+                if(villeDep =="")
+                {
+                    cout << "Veuillez saisir la ville d'arrivée"<< endl;
+                }
+                else
+                {
+                    cout << "Veuillez saisir la ville d'arrivée. Note: laisser le champs vide si vous ne voulez pas de ville de depart" <<endl;
+                }
+
+                cin >> villeArr;
+                
+                catalogue.Sauvegarder(nomFichier, villeDep, villeArr);
                 enTrainDeChoisir = false;
             } else if ( choix == 4 )
             {
@@ -329,6 +390,8 @@ static void sauvegarder ( Catalogue & catalogue )
         }
     }
 }
+
+
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 
@@ -375,7 +438,6 @@ int main ()
                 sauvegarder ( leCatalogue );
                 break;
             case 0:
-                leCatalogue.Sauvegarder("text.txt");
                 return 0;
         }
     }
