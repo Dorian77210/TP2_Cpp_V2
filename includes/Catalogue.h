@@ -48,10 +48,6 @@ public:
     // Format d'affichage :
     // {num} - {trajet.Affichage()}
 
-<<<<<<< HEAD
-    CollectionTrajets * Rechercher (
-        const char * villeDepart,
-=======
     bool ContientTrajets ( ) const;
     // Mode d'emploi :
     // Permet de savoir si le catalogue contient des trajets dans la collection.
@@ -59,7 +55,6 @@ public:
 
     CollectionTrajets * Rechercher ( 
         const char * villeDepart, 
->>>>>>> 06855b12b7b08df39a47c95a63b9c49eab4e2acd
         const char * villeArrivee) const;
     // Mode d'emploi :
     // Retourne tous les trajet dont la ville de départ
