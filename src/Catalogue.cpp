@@ -145,6 +145,7 @@ void Catalogue::Sauvegarder(string nomFichier, const CollectionTrajets & collect
             monFlux << i << " "; //index
             monFlux << static_cast<string>(*(collection.TrajetNumero(i)));
         }
+        
         monFlux.close();
     }
     else
@@ -183,31 +184,25 @@ void Catalogue::restituer(string nomFichier)
     {
         this->AjouterTrajet(collectionAAjouter.TrajetNumero(i));
     }
-    cout << "avant erase "<< endl;
+
     collectionAAjouter.Erase();
 }
 
 CollectionTrajets* Catalogue::restituerCollectionEntiere(string nomFichier)
 {
     ifstream monFlux(nomFichier, ifstream::binary);
-    monFlux.seekg(0, monFlux.end);
-    long taille = monFlux.tellg();
-    monFlux.seekg(0);
-    char *bufffer = new char[taille];
     string lesTrajets;
 
     CollectionTrajets* collectionAAjouter = new CollectionTrajets(); // collection a remplir
 
-    monFlux.read(bufffer, taille);
+    // lecture du fichier
+    stringstream buffer;
+    buffer << monFlux.rdbuf ( );
+    lesTrajets = buffer.str ( );
 
-    stringstream trajetStream;
-    trajetStream.write(bufffer, taille);
-    delete[] bufffer;
-    lesTrajets = trajetStream.str();
+    // fermeture du fichier
+    monFlux.close ( );
 
-    cout << endl
-         << "voila : " << endl
-         << lesTrajets << endl;
     size_t retourALaLigneIndex, indexEspace; // virguleIndex;
     unsigned int type;
     unsigned int total = 0;
@@ -217,15 +212,10 @@ CollectionTrajets* Catalogue::restituerCollectionEntiere(string nomFichier)
     unsigned int ts = stoul(lesTrajets.substr(0, indexEspace)); // ajout trajet simple
     total += ts;
 
-    cout << "ts: " << ts << endl;
-
     lesTrajets = lesTrajets.substr(indexEspace + 1); // couper la chaine
     retourALaLigneIndex = lesTrajets.find_first_of('\n');
     unsigned int tc = stoul(lesTrajets.substr(0, retourALaLigneIndex)); // ajout trajet composé
     total += tc;
-    cout << "ts: " << tc << endl;
-
-    cout << "total : " << total << endl;
 
     lesTrajets = lesTrajets.substr(retourALaLigneIndex + 1); // couper la chaine pour avoir que les trajets
 
@@ -239,23 +229,16 @@ CollectionTrajets* Catalogue::restituerCollectionEntiere(string nomFichier)
 
         indexEspace = lesTrajets.find_first_of(" ");
         type = stoul(lesTrajets.substr(0, indexEspace));
-        cout << "type : " << type << endl;
         lesTrajets = lesTrajets.substr(indexEspace + 1);
 
         if (type == 1)
         {
             // trajet simple
-            cout << "les trajets : " << endl
-                 << lesTrajets << endl;
-            //this->AjouterTrajet(new TrajetSimple(lesTrajets));
             collectionAAjouter->AjouterTrajet(new TrajetSimple(lesTrajets));
         }
         else
         {
             // trajet composé
-            cout << "les trajets : " << endl
-                 << lesTrajets << endl;
-            //this->AjouterTrajet(new TrajetCompose(lesTrajets));
             collectionAAjouter->AjouterTrajet(new TrajetCompose(lesTrajets));
         }
     }
@@ -329,42 +312,33 @@ void Catalogue::restituer(string nomFichier, string depart, string arrive)
 
 void Catalogue::restituer(string nomFichier, unsigned int debut, unsigned int fin)
 {
-    CollectionTrajets collectionAAjouter;
-    CollectionTrajets collectionAAjouterTrie;
-    CollectionTrajets *inter = restituerCollectionEntiere(nomFichier);
-    collectionAAjouter = *inter;
-    delete inter;
+    CollectionTrajets *collectionEntiere = restituerCollectionEntiere(nomFichier);
 
-    // trie
-    collectionAAjouterTrie = collectionAAjouter.GetTrajetsParIntervalle(debut, fin);
-
-    // delete les objets non retenu après le trie
-    for (unsigned int i = 1; i <= collectionAAjouter.NombreDeTrajets(); i++)
+    if ( fin > collectionEntiere->NombreDeTrajets ( ) )
     {
-        bool trouve = false;
-        for (unsigned int j = 1; j <= collectionAAjouterTrie.NombreDeTrajets(); j++)
-        {
-            if (collectionAAjouter.TrajetNumero(i) == collectionAAjouterTrie.TrajetNumero(j))
-            {
-                trouve = true;
-                break;
-            }
-        }
-
-        if (!trouve)
-        {
-            delete collectionAAjouter.TrajetNumero(i);
-        }
+        fin = collectionEntiere->NombreDeTrajets ( );
     }
 
-    collectionAAjouter.Erase();
-
-    // ajout dans le catalogue
-    for (unsigned int i = 1; i <= collectionAAjouter.NombreDeTrajets(); i++)
+    // ajout des trajets souhaités
+    for ( unsigned int i ( debut ); i <= fin; i++)
     {
-        this->AjouterTrajet(collectionAAjouter.TrajetNumero(i));
+        _trajets.AjouterTrajet ( collectionEntiere->TrajetNumero ( i ) );
     }
-    collectionAAjouterTrie.Erase();
+
+    // suppression des trajets dans l'intervalle [1, debut[
+    for ( unsigned i ( 1 ); i < debut; i++)
+    {
+        delete collectionEntiere->TrajetNumero ( i );
+    }
+
+    // suppression des trajets dans l'intervalle ]fin, collectionEntire.NombreTrajets()]
+    for ( unsigned int i ( fin + 1 ); i <= collectionEntiere->NombreDeTrajets ( ); i++ )
+    {
+        delete collectionEntiere->TrajetNumero ( i );
+    }
+
+    collectionEntiere->Erase ( );
+    delete collectionEntiere;
 }
 
 //------------------------------------------------- Surcharge d'opérateurs

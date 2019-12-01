@@ -102,14 +102,14 @@ TrajetSimple::TrajetSimple( string & data )
 
     // traitement de la ville de depart
     buffer = data.substr(0, virguleIndex);
-    _villeDepart = new char [ buffer.length() ];
+    _villeDepart = new char [ buffer.length() + 1 ];
     strcpy ( _villeDepart, buffer.c_str() );
 
     // traitement de la ville d'arrivee
     data = data.substr(virguleIndex + 1);
     virguleIndex = data.find_first_of( DONNEES_SEPARATEUR );
     buffer = data.substr(0, virguleIndex);
-    _villeArrivee = new char [ buffer.length() ];
+    _villeArrivee = new char [ buffer.length() + 1 ];
     strcpy( _villeArrivee, buffer.c_str() );
 
     // traitement du moyen de transport
