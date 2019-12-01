@@ -374,24 +374,23 @@ static void sauvegarder ( Catalogue & catalogue )
                 cout << "Sauvegarde selon une ville de départ et/ou d'arrivée choisie." << endl;
                 cout << "Attention : si les deux villes saisies sont vides, la sauvegarde par défaut sera utilisée" << endl;
                 // TODO : ajout d'une fonction pour séléctionner la ville de départ et d'arrivés
-                string villeDep = "";
-                string villeArr = "";
+                string depart = "";
+                string arrivee = "";
 
                 cout << "Saisissez la ville de départ. Note: laisser le champs vide si vous ne voulez pas de ville de depart";
-                cin >> villeDep;
+                cin >> depart;
 
-                if( villeDep == "" )
+                cout << "Saisissez la ville d'arrivée. Note: laisser le champs vide si vous ne voulez pas de ville de depart" << endl;
+                cin >> arrivee;
+
+                if ( arrivee.empty() && depart.empty() )
                 {
-                    cout << "Veuillez saisir la ville d'arrivée"<< endl;
-                }
-                else
+                    catalogue.Sauvegarder( nomFichier );
+                } else 
                 {
-                    cout << "Veuillez saisir la ville d'arrivée. Note: laisser le champs vide si vous ne voulez pas de ville de depart" << endl;
+                    catalogue.Sauvegarder(nomFichier, depart, arrivee);
                 }
 
-                cin >> villeArr;
-                
-                catalogue.Sauvegarder(nomFichier, villeDep, villeArr);
                 enTrainDeChoisir = false;
             } else if ( choix == 4 )
             {
