@@ -319,7 +319,7 @@ void Catalogue::restituer(string nomFichier, string depart, string arrivee)
 
         if (!trouve)
         {
-            collectionASupprimer.AjouterTrajet ( collectionAAjouter.TrajetNumero( i  ) );
+            collectionASupprimer.AjouterTrajet ( collectionAAjouter.TrajetNumero( i ) );
         }
     }
 
@@ -327,6 +327,13 @@ void Catalogue::restituer(string nomFichier, string depart, string arrivee)
     for (unsigned int i = 1; i <= collectionAAjouter.NombreDeTrajets(); i++)
     {
         AjouterTrajet(collectionAAjouter.TrajetNumero(i));
+    }
+
+    // suppression de la collection a supprimer
+    for (unsigned int i ( 1 ); i <= collectionASupprimer.NombreDeTrajets(); i++)
+    {
+        const Trajet *trajet = collectionASupprimer.TrajetNumero(i);
+        delete trajet;
     }
 
     collectionAAjouter.Erase();
