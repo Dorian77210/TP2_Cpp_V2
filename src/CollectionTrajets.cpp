@@ -124,18 +124,27 @@ CollectionTrajets CollectionTrajets::GetTrajetsParVilles ( const string depart, 
         trajetCourant = _elements [ i ];
         trajetCourantDepart = trajetCourant->VilleDepart ();
 
-        if ( depart.compare ( trajetCourantDepart) == 0) // villes de departs égales
+        if ( depart.empty ( ) )
         {
-            if ( arrivee.empty ( ) )
+            trajetCourantArrivee = trajetCourant->VilleArrivee ( );
+            if ( arrivee.compare ( trajetCourantArrivee ) == 0 )
             {
                 collectionTrajets.AjouterTrajet ( trajetCourant );
-            } else
+            }   
+        } else if ( arrivee.empty ( ) )
+        {
+            trajetCourantDepart = trajetCourant->VilleDepart ( );
+            if ( depart.compare ( trajetCourantDepart ) == 0 )
             {
-                trajetCourantArrivee = trajetCourant->VilleArrivee ();
-                if ( arrivee.compare ( trajetCourantArrivee ) == 0) // villes d'arrivee égales
-                {
-                    collectionTrajets.AjouterTrajet ( trajetCourant );
-                }
+                collectionTrajets.AjouterTrajet ( trajetCourant );
+            }
+        } else
+        {
+            trajetCourantDepart = trajetCourant->VilleDepart ( );
+            trajetCourantArrivee = trajetCourant->VilleArrivee ( );
+            if ( ( depart.compare ( trajetCourantDepart ) == 0 ) && ( arrivee.compare ( trajetCourantArrivee ) == 0 ) )
+            {
+                collectionTrajets.AjouterTrajet ( trajetCourant );
             }
         }
     }

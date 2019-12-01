@@ -156,23 +156,23 @@ void Catalogue::Sauvegarder(string nomFichier, const CollectionTrajets & collect
 
 void Catalogue::Sauvegarder(string nomFichier)
 {
-  this->Sauvegarder(nomFichier, this->_trajets);
+    Sauvegarder(nomFichier, this->_trajets);
 }
 
 void Catalogue::Sauvegarder(string nomFichier, TypeTrajet type)
 {
-    this->Sauvegarder(nomFichier, this->_trajets.GetTrajetsParType(type));
+    Sauvegarder(nomFichier, this->_trajets.GetTrajetsParType(type));
     //cout << this->_trajets.GetTrajetsParType(type);
 }
 
 void Catalogue::Sauvegarder(string nomFichier, string depart, string arrivee)
 {
-    this->Sauvegarder(nomFichier, this->_trajets.GetTrajetsParVilles(depart, arrivee));
+    Sauvegarder(nomFichier, this->_trajets.GetTrajetsParVilles(depart, arrivee));
 }
 
 void Catalogue::Sauvegarder(string nomFichier, unsigned int debut, unsigned int fin)
 {
-    this->Sauvegarder(nomFichier, this->_trajets.GetTrajetsParIntervalle(debut, fin));
+    Sauvegarder(nomFichier, this->_trajets.GetTrajetsParIntervalle(debut, fin));
 }
 
 void Catalogue::restituer(string nomFichier)
@@ -182,7 +182,7 @@ void Catalogue::restituer(string nomFichier)
 
     for (unsigned int i = 1; i <= collectionAAjouter->NombreDeTrajets(); i++)
     {
-        this->AjouterTrajet(collectionAAjouter->TrajetNumero(i));
+        AjouterTrajet(collectionAAjouter->TrajetNumero(i));
     }
 
     collectionAAjouter->Erase();
@@ -271,7 +271,7 @@ void Catalogue::restituer(string nomFichier, TypeTrajet type)
     delete collectionEntiere;
 }
 
-void Catalogue::restituer(string nomFichier, string depart, string arrive)
+void Catalogue::restituer(string nomFichier, string depart, string arrivee)
 {
     CollectionTrajets collectionAAjouter;
     CollectionTrajets collectionAAjouterTrie;
@@ -280,7 +280,7 @@ void Catalogue::restituer(string nomFichier, string depart, string arrive)
     delete inter;
 
     // trie
-    collectionAAjouterTrie = collectionAAjouter.GetTrajetsParVilles(depart, arrive);
+    collectionAAjouterTrie = collectionAAjouter.GetTrajetsParVilles(depart, arrivee);
 
     // delete les objets non retenu après le trie
     for (unsigned int i = 1; i <= collectionAAjouter.NombreDeTrajets(); i++)
@@ -306,7 +306,7 @@ void Catalogue::restituer(string nomFichier, string depart, string arrive)
     // ajout dans le catalogue
     for (unsigned int i = 1; i <= collectionAAjouter.NombreDeTrajets(); i++)
     {
-        this->AjouterTrajet(collectionAAjouter.TrajetNumero(i));
+        AjouterTrajet(collectionAAjouter.TrajetNumero(i));
     }
     collectionAAjouterTrie.Erase();
 }
