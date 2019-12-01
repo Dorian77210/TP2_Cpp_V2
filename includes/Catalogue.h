@@ -103,13 +103,18 @@ public:
 
     void Sauvegarder(string nomFichier, unsigned int debut, unsigned int fin);
     // cette méthode permet de sauvegarder le catalogue en le filtrant selon
-    //une interval
+    //une interval [debut fin]
 
+    CollectionTrajets* restituerCollectionEntiere(string nomFichier);
+    void restituer(string nomFichier);
+    void restituer(CollectionTrajets & c);
+    void restituer(string nomFichier, TypeTrajet type);
+    void restituer(string nomFichier, string depart, string arrive);
+    void restituer(string nomFichier, unsigned int debut, unsigned int fin);
 
+    //------------------------------------------------- Surcharge d'opérateurs
 
-//------------------------------------------------- Surcharge d'opérateurs
-
-//-------------------------------------------- Constructeurs - destructeur
+    //-------------------------------------------- Constructeurs - destructeur
     Catalogue ( );
     // Mode d'emploi :
     // Constructeur par défaut de la classe <Catalogue> avec
