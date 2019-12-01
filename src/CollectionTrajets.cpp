@@ -124,14 +124,14 @@ CollectionTrajets CollectionTrajets::GetTrajetsParVilles ( const string depart, 
         trajetCourant = _elements [ i ];
         trajetCourantDepart = trajetCourant->VilleDepart ();
 
-        if ( depart.empty ( ) )
+        if ( depart == "stop" )
         {
             trajetCourantArrivee = trajetCourant->VilleArrivee ( );
             if ( arrivee.compare ( trajetCourantArrivee ) == 0 )
             {
                 collectionTrajets.AjouterTrajet ( trajetCourant );
             }   
-        } else if ( arrivee.empty ( ) )
+        } else if ( arrivee == "stop" )
         {
             trajetCourantDepart = trajetCourant->VilleDepart ( );
             if ( depart.compare ( trajetCourantDepart ) == 0 )

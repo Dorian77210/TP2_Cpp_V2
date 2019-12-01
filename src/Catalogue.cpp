@@ -168,7 +168,6 @@ void Catalogue::Sauvegarder(string nomFichier)
 void Catalogue::Sauvegarder(string nomFichier, TypeTrajet type)
 {
     Sauvegarder(nomFichier, this->_trajets.GetTrajetsParType(type));
-    //cout << this->_trajets.GetTrajetsParType(type);
 }
 
 void Catalogue::Sauvegarder(string nomFichier, string depart, string arrivee)
