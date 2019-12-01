@@ -145,7 +145,7 @@ void Catalogue::Sauvegarder(string nomFichier, const CollectionTrajets & collect
             monFlux << i << " "; //index
             monFlux << static_cast<string>(*(collection.TrajetNumero(i)));
         }
-        
+
         monFlux.close();
     }
     else
@@ -177,15 +177,16 @@ void Catalogue::Sauvegarder(string nomFichier, unsigned int debut, unsigned int 
 
 void Catalogue::restituer(string nomFichier)
 {
-    CollectionTrajets collectionAAjouter;
-    collectionAAjouter = *restituerCollectionEntiere(nomFichier);
+    CollectionTrajets *collectionAAjouter;
+    collectionAAjouter = restituerCollectionEntiere(nomFichier);
 
-    for (unsigned int i = 1; i <= collectionAAjouter.NombreDeTrajets(); i++)
+    for (unsigned int i = 1; i <= collectionAAjouter->NombreDeTrajets(); i++)
     {
-        this->AjouterTrajet(collectionAAjouter.TrajetNumero(i));
+        this->AjouterTrajet(collectionAAjouter->TrajetNumero(i));
     }
 
-    collectionAAjouter.Erase();
+    collectionAAjouter->Erase();
+    delete collectionAAjouter;
 }
 
 CollectionTrajets* Catalogue::restituerCollectionEntiere(string nomFichier)
