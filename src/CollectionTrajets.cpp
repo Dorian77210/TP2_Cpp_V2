@@ -112,7 +112,7 @@ CollectionTrajets CollectionTrajets::GetTrajetsParType ( const TypeTrajet type )
     return collectionTrajets;
 } // ------ Fin de GetTrajetsParType
 
-CollectionTrajets CollectionTrajets::GetTrajetsParVilles ( const string depart, const string arrivee ) const
+CollectionTrajets CollectionTrajets::GetTrajetsParVilles ( const string & depart, const string & arrivee ) const
 // Algorithme : aucun
 {
     CollectionTrajets collectionTrajets;

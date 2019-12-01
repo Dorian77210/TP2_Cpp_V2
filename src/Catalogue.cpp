@@ -134,8 +134,8 @@ void Catalogue::Sauvegarder(string nomFichier, const CollectionTrajets & collect
     if(monFlux)
     {
         // completer l'entete
-        unsigned int nbTrajetSimple = collection.GetTotalParType(TRAJET_SIMPLE);
-        unsigned int nbTrajetCompose= collection.GetTotalParType(TRAJET_COMPOSE);
+        unsigned int nbTrajetSimple = this->_trajets.GetTotalParType(TRAJET_SIMPLE);
+        unsigned int nbTrajetCompose= this->_trajets.GetTotalParType(TRAJET_COMPOSE);
 
         if ( ! ( monFlux << nbTrajetSimple << " " << nbTrajetCompose << endl ) )
         {
@@ -292,8 +292,7 @@ void Catalogue::restituer(string nomFichier, TypeTrajet type)
 
 void Catalogue::restituer(string nomFichier, string depart, string arrivee)
 {
-    CollectionTrajets collectionAAjouter;
-    CollectionTrajets collectionAAjouterTrie;
+    CollectionTrajets collectionASupprimer;
     CollectionTrajets *collectionEntiere = restituerCollectionEntiere(nomFichier);
     if ( collectionEntiere == nullptr )
     {
@@ -301,19 +300,17 @@ void Catalogue::restituer(string nomFichier, string depart, string arrivee)
         return;
     }
 
-    collectionAAjouter = *collectionEntiere;
-    
 
     // trie
-    collectionAAjouterTrie = collectionAAjouter.GetTrajetsParVilles(depart, arrivee);
+    CollectionTrajets collectionAAjouter = collectionEntiere->GetTrajetsParVilles(depart, arrivee);
 
     // delete les objets non retenu après le trie
-    for (unsigned int i = 1; i <= collectionAAjouter.NombreDeTrajets(); i++)
+    for (unsigned int i = 1; i <= collectionEntiere->NombreDeTrajets(); i++)
     {
         bool trouve = false;
-        for (unsigned int j = 1; j <= collectionAAjouterTrie.NombreDeTrajets(); j++)
+        for (unsigned int j = 1; j <= collectionAAjouter.NombreDeTrajets(); j++)
         {
-            if (collectionAAjouter.TrajetNumero(i) == collectionAAjouterTrie.TrajetNumero(j))
+            if (collectionEntiere->TrajetNumero(i) == collectionAAjouter.TrajetNumero(j))
             {
                 trouve = true;
                 break;
@@ -322,7 +319,7 @@ void Catalogue::restituer(string nomFichier, string depart, string arrivee)
 
         if (!trouve)
         {
-            delete collectionAAjouter.TrajetNumero(i);
+            collectionASupprimer.AjouterTrajet ( collectionAAjouter.TrajetNumero( i  ) );
         }
     }
 
@@ -333,7 +330,6 @@ void Catalogue::restituer(string nomFichier, string depart, string arrivee)
     }
 
     collectionAAjouter.Erase();
-    collectionAAjouterTrie.Erase();
     collectionEntiere->Erase();
     delete collectionEntiere;
 }

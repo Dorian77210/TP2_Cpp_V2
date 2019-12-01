@@ -75,7 +75,7 @@ public:
     // Elle sera utilisée lors de l'écriture des trajets en fonction du type de trajets
     // choisi par l'utilisateur
 
-    CollectionTrajets GetTrajetsParVilles ( const string depart, const string arrivee = "" ) const;
+    CollectionTrajets GetTrajetsParVilles ( const string & depart, const string & arrivee ) const;
     // Mode d'emploi :
     // Cette méthode permet de filtrer la collection courante de trajets en fonction
     // de la ville de départ et de la ville d'arrivée
