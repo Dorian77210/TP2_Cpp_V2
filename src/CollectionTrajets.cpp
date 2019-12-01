@@ -116,7 +116,7 @@ CollectionTrajets CollectionTrajets::GetTrajetsParVilles ( const string & depart
 // Algorithme : aucun
 {
     CollectionTrajets collectionTrajets;
-    const Trajet *trajetCourant;
+    const Trajet *trajetCourant = nullptr;
     const char *trajetCourantDepart, *trajetCourantArrivee;
 
     for ( unsigned int i ( 0 ); i < _nbElementCourant; i++ ) 

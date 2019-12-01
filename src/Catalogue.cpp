@@ -205,7 +205,7 @@ CollectionTrajets* Catalogue::restituerCollectionEntiere(string nomFichier)
     stringstream buffer;
     if ( ! ( buffer << monFlux.rdbuf ( ) ) )
     {
-        cerr << "Erreur pednant la lecture du fichier " << nomFichier << endl;
+        cerr << "Erreur pendant la lecture du fichier " << nomFichier << endl;
         monFlux.close();
         delete collectionAAjouter;
         return nullptr;
@@ -319,7 +319,7 @@ void Catalogue::restituer(string nomFichier, string depart, string arrivee)
 
         if (!trouve)
         {
-            collectionASupprimer.AjouterTrajet ( collectionAAjouter.TrajetNumero( i ) );
+            collectionASupprimer.AjouterTrajet ( collectionEntiere->TrajetNumero( i ) );
         }
     }
 
@@ -329,11 +329,10 @@ void Catalogue::restituer(string nomFichier, string depart, string arrivee)
         AjouterTrajet(collectionAAjouter.TrajetNumero(i));
     }
 
-    // suppression de la collection a supprimer
+    // suppression de la collectionASupprimer
     for (unsigned int i ( 1 ); i <= collectionASupprimer.NombreDeTrajets(); i++)
     {
-        const Trajet *trajet = collectionASupprimer.TrajetNumero(i);
-        delete trajet;
+        delete collectionASupprimer.TrajetNumero ( i );
     }
 
     collectionAAjouter.Erase();
