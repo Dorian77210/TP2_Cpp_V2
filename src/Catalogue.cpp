@@ -140,7 +140,7 @@ void Catalogue::Sauvegarder(string nomFichier, const CollectionTrajets & collect
         monFlux << nbTrajetSimple << " " << nbTrajetCompose << endl;
 
         // ajouter les trajets
-        for (int i = 1; i <= collection.NombreDeTrajets(); ++i)
+        for ( unsigned int i ( 1 ); i <= collection.NombreDeTrajets(); ++i)
         {
             monFlux << i << " "; //index
             monFlux << static_cast<string>(*(collection.TrajetNumero(i)));
@@ -265,43 +265,26 @@ CollectionTrajets* Catalogue::restituerCollectionEntiere(string nomFichier)
 
 void Catalogue::restituer(string nomFichier, TypeTrajet type)
 {
-    CollectionTrajets collectionAAjouter;
-    CollectionTrajets collectionAAjouterTrie;
-    CollectionTrajets *inter = restituerCollectionEntiere(nomFichier);
-    collectionAAjouter = *inter;
-    delete inter;
+    TypeTrajet typeARetirer = type == TRAJET_COMPOSE ? TRAJET_SIMPLE : TRAJET_COMPOSE;
+    CollectionTrajets *collectionEntiere = restituerCollectionEntiere ( nomFichier );
+    CollectionTrajets collectionAAjouter = collectionEntiere->GetTrajetsParType ( type );
+    CollectionTrajets collectionARetirer = collectionEntiere->GetTrajetsParType ( typeARetirer );
 
-    // trie
-    collectionAAjouterTrie = collectionAAjouter.GetTrajetsParType(type);
-
-    // delete les objets non retenu après le trie
-    for (unsigned int i = 1; i <= collectionAAjouter.NombreDeTrajets(); i++)
+    // suppression des trajets a retirer
+    for ( unsigned i ( 1 ); i <= collectionARetirer.NombreDeTrajets ( ); i++)
     {
-        bool trouve = false;
-        for (unsigned int j = 1; j <= collectionAAjouterTrie.NombreDeTrajets(); j++)
-        {
-            if(collectionAAjouter.TrajetNumero(i) == collectionAAjouterTrie.TrajetNumero(j))
-            {
-                trouve = true;
-                break;
-            }
-        }
-
-        if(!trouve)
-        {
-            delete collectionAAjouter.TrajetNumero(i);
-        }
+        delete collectionARetirer.TrajetNumero ( i );
     }
 
-    collectionAAjouter.Erase();
-
-    // ajout dans le catalogue
-        for (unsigned int i = 1; i <= collectionAAjouter.NombreDeTrajets(); i++)
+    // ajout des trajets
+    for ( unsigned int i ( 1 ); i <= collectionAAjouter.NombreDeTrajets ( ); i++)
     {
-        this->AjouterTrajet(collectionAAjouter.TrajetNumero(i));
+        _trajets.AjouterTrajet ( collectionAAjouter.TrajetNumero ( i ) );
     }
-    collectionAAjouterTrie.Erase();
 
+    collectionAAjouter.Erase ( );
+    collectionEntiere->Erase ( );
+    delete collectionEntiere;
 }
 
 void Catalogue::restituer(string nomFichier, string depart, string arrive)

@@ -466,7 +466,7 @@ static void restituer(Catalogue &catalogue)
             cout << "Restitution par type de trajets choisie." << endl;
             TypeTrajet trajetChoisi;
             trajetChoisi = selectionTypeTrajet();
-            catalogue.Sauvegarder(nomFichier, trajetChoisi);
+            catalogue.restituer(nomFichier, trajetChoisi);
 
             break;
 
