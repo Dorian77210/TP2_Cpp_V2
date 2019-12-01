@@ -134,8 +134,8 @@ void Catalogue::Sauvegarder(string nomFichier, const CollectionTrajets & collect
     if(monFlux)
     {
         // completer l'entete
-        unsigned int nbTrajetSimple = this->_trajets.GetTotalParType(TRAJET_SIMPLE);
-        unsigned int nbTrajetCompose= this->_trajets.GetTotalParType(TRAJET_COMPOSE);
+        unsigned int nbTrajetSimple = collection.GetTotalParType(TRAJET_SIMPLE);
+        unsigned int nbTrajetCompose= collection.GetTotalParType(TRAJET_COMPOSE);
 
         if ( ! ( monFlux << nbTrajetSimple << " " << nbTrajetCompose << endl ) )
         {
