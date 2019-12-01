@@ -415,25 +415,25 @@ static void sauvegarder ( Catalogue & catalogue )
             } else if ( choix == 3 )
             {
                 cout << "Sauvegarde selon une ville de départ et/ou d'arrivée choisie." << endl;
+                cout << "Attention : si les deux villes saisies sont vides, la sauvegarde par défaut sera utilisée" << endl;
                 // TODO : ajout d'une fonction pour séléctionner la ville de départ et d'arrivés
-                string villeDep= "";
-                string villeArr = "";
+                string depart = "";
+                string arrivee = "";
 
                 cout << "Saisissez la ville de départ. Note: laisser le champs vide si vous ne voulez pas de ville de depart";
-                cin >> villeDep;
+                cin >> depart;
 
-                if(villeDep =="")
+                cout << "Saisissez la ville d'arrivée. Note: laisser le champs vide si vous ne voulez pas de ville de depart" << endl;
+                cin >> arrivee;
+
+                if ( arrivee.empty() && depart.empty() )
                 {
-                    cout << "Veuillez saisir la ville d'arrivée"<< endl;
-                }
-                else
+                    catalogue.Sauvegarder( nomFichier );
+                } else 
                 {
-                    cout << "Veuillez saisir la ville d'arrivée. Note: laisser le champs vide si vous ne voulez pas de ville de depart" <<endl;
+                    catalogue.Sauvegarder(nomFichier, depart, arrivee);
                 }
 
-                cin >> villeArr;
-                
-                catalogue.Sauvegarder(nomFichier, villeDep, villeArr);
                 enTrainDeChoisir = false;
             } else if ( choix == 4 )
             {
@@ -500,26 +500,22 @@ static void restituer(Catalogue &catalogue)
 
         switch (choix)
         {
-            case 1:
-
-                cout << "Restitution par défaut choisie." << endl;
-                catalogue.restituer(nomFichier);         
-                break;
-
-            case 2:
-                cout << "Restitution par type de trajets choisie." << endl;
-                TypeTrajet trajetChoisi;
-                trajetChoisi = selectionTypeTrajet();
-                catalogue.restituer(nomFichier, trajetChoisi);
-
-                break;
-
-            case 3:
-            {
-                cout << "Restitution selon une ville de départ et/ou d'arrivée choisie." << endl;
-                // TODO : ajout d'une fonction pour séléctionner la ville de départ et d'arrivés
-                string villeDep = "";
-                string villeArr = "";
+        case 1:
+            cout << "Restitution par défaut choisie." << endl;
+            catalogue.restituer(nomFichier);         
+            break;
+        case 2:
+            cout << "Restitution par type de trajets choisie." << endl;
+            TypeTrajet trajetChoisi;
+            trajetChoisi = selectionTypeTrajet();
+            catalogue.restituer(nomFichier, trajetChoisi);
+            break;
+        case 3:
+        {
+            cout << "Restitution selon une ville de départ et/ou d'arrivée choisie." << endl;
+            // TODO : ajout d'une fonction pour séléctionner la ville de départ et d'arrivés
+            string villeDep = "";
+            string villeArr = "";
 
                 cout << "Saisissez la ville de départ. Note: laisser le champs vide si vous ne voulez pas de ville de depart"<<endl;
                 cin >> villeDep;
@@ -535,7 +531,7 @@ static void restituer(Catalogue &catalogue)
 
                 cin >> villeArr;
 
-                catalogue.Sauvegarder(nomFichier, villeDep, villeArr);
+                catalogue.restituer(nomFichier, villeDep, villeArr);
                 
                 break;
             }
@@ -550,7 +546,7 @@ static void restituer(Catalogue &catalogue)
             default:
             {
                 cout << "Restitution par défaut choisie." << endl;
-                catalogue.Sauvegarder(nomFichier);     
+                catalogue.restituer(nomFichier);     
                 break;
             }
         }

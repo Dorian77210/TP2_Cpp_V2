@@ -137,7 +137,13 @@ void Catalogue::Sauvegarder(string nomFichier, const CollectionTrajets & collect
         unsigned int nbTrajetSimple = this->_trajets.GetTotalParType(TRAJET_SIMPLE);
         unsigned int nbTrajetCompose= this->_trajets.GetTotalParType(TRAJET_COMPOSE);
 
-        monFlux << nbTrajetSimple << " " << nbTrajetCompose << endl;
+        if ( ! ( monFlux << nbTrajetSimple << " " << nbTrajetCompose << endl ) )
+        {
+            // on arrête la sauvegarde
+            cerr << "Erreur pendant l'écriture dans le fichier " << nomFichier << endl;
+            monFlux.close ();
+            return;
+        }
 
         // ajouter les trajets
         for ( unsigned int i ( 1 ); i <= collection.NombreDeTrajets(); ++i)
@@ -156,23 +162,23 @@ void Catalogue::Sauvegarder(string nomFichier, const CollectionTrajets & collect
 
 void Catalogue::Sauvegarder(string nomFichier)
 {
-  this->Sauvegarder(nomFichier, this->_trajets);
+    Sauvegarder(nomFichier, this->_trajets);
 }
 
 void Catalogue::Sauvegarder(string nomFichier, TypeTrajet type)
 {
-    this->Sauvegarder(nomFichier, this->_trajets.GetTrajetsParType(type));
+    Sauvegarder(nomFichier, this->_trajets.GetTrajetsParType(type));
     //cout << this->_trajets.GetTrajetsParType(type);
 }
 
 void Catalogue::Sauvegarder(string nomFichier, string depart, string arrivee)
 {
-    this->Sauvegarder(nomFichier, this->_trajets.GetTrajetsParVilles(depart, arrivee));
+    Sauvegarder(nomFichier, this->_trajets.GetTrajetsParVilles(depart, arrivee));
 }
 
 void Catalogue::Sauvegarder(string nomFichier, unsigned int debut, unsigned int fin)
 {
-    this->Sauvegarder(nomFichier, this->_trajets.GetTrajetsParIntervalle(debut, fin));
+    Sauvegarder(nomFichier, this->_trajets.GetTrajetsParIntervalle(debut, fin));
 }
 
 void Catalogue::restituer(string nomFichier)
@@ -182,7 +188,7 @@ void Catalogue::restituer(string nomFichier)
 
     for (unsigned int i = 1; i <= collectionAAjouter->NombreDeTrajets(); i++)
     {
-        this->AjouterTrajet(collectionAAjouter->TrajetNumero(i));
+        AjouterTrajet(collectionAAjouter->TrajetNumero(i));
     }
 
     collectionAAjouter->Erase();
@@ -198,7 +204,14 @@ CollectionTrajets* Catalogue::restituerCollectionEntiere(string nomFichier)
 
     // lecture du fichier
     stringstream buffer;
-    buffer << monFlux.rdbuf ( );
+    if ( ! ( buffer << monFlux.rdbuf ( ) ) )
+    {
+        cerr << "Erreur pednant la lecture du fichier " << nomFichier << endl;
+        monFlux.close();
+        delete collectionAAjouter;
+        return nullptr;
+    }
+
     lesTrajets = buffer.str ( );
 
     // fermeture du fichier
@@ -249,8 +262,15 @@ CollectionTrajets* Catalogue::restituerCollectionEntiere(string nomFichier)
 
 void Catalogue::restituer(string nomFichier, TypeTrajet type)
 {
-    TypeTrajet typeARetirer = type == TRAJET_COMPOSE ? TRAJET_SIMPLE : TRAJET_COMPOSE;
+    TypeTrajet typeARetirer = ( type == TRAJET_COMPOSE ) ? TRAJET_SIMPLE : TRAJET_COMPOSE;
     CollectionTrajets *collectionEntiere = restituerCollectionEntiere ( nomFichier );
+
+    if ( collectionEntiere == nullptr )
+    {
+        cerr << "Restitution impossible" << endl;
+        return;
+    }
+
     CollectionTrajets collectionAAjouter = collectionEntiere->GetTrajetsParType ( type );
     CollectionTrajets collectionARetirer = collectionEntiere->GetTrajetsParType ( typeARetirer );
 
@@ -271,16 +291,22 @@ void Catalogue::restituer(string nomFichier, TypeTrajet type)
     delete collectionEntiere;
 }
 
-void Catalogue::restituer(string nomFichier, string depart, string arrive)
+void Catalogue::restituer(string nomFichier, string depart, string arrivee)
 {
     CollectionTrajets collectionAAjouter;
     CollectionTrajets collectionAAjouterTrie;
-    CollectionTrajets *inter = restituerCollectionEntiere(nomFichier);
-    collectionAAjouter = *inter;
-    delete inter;
+    CollectionTrajets *collectionEntiere = restituerCollectionEntiere(nomFichier);
+    if ( collectionEntiere == nullptr )
+    {
+        cerr << "Restitution impossible" << endl;
+        return;
+    }
+
+    collectionAAjouter = *collectionEntiere;
+    
 
     // trie
-    collectionAAjouterTrie = collectionAAjouter.GetTrajetsParVilles(depart, arrive);
+    collectionAAjouterTrie = collectionAAjouter.GetTrajetsParVilles(depart, arrivee);
 
     // delete les objets non retenu après le trie
     for (unsigned int i = 1; i <= collectionAAjouter.NombreDeTrajets(); i++)
@@ -301,19 +327,27 @@ void Catalogue::restituer(string nomFichier, string depart, string arrive)
         }
     }
 
-    collectionAAjouter.Erase();
-
     // ajout dans le catalogue
     for (unsigned int i = 1; i <= collectionAAjouter.NombreDeTrajets(); i++)
     {
-        this->AjouterTrajet(collectionAAjouter.TrajetNumero(i));
+        AjouterTrajet(collectionAAjouter.TrajetNumero(i));
     }
+
+    collectionAAjouter.Erase();
     collectionAAjouterTrie.Erase();
+    collectionEntiere->Erase();
+    delete collectionEntiere;
 }
 
 void Catalogue::restituer(string nomFichier, unsigned int debut, unsigned int fin)
 {
     CollectionTrajets *collectionEntiere = restituerCollectionEntiere(nomFichier);
+
+    if ( collectionEntiere == nullptr )
+    {
+        cerr << "Restitution impossible" << endl;
+        return;
+    }
 
     if ( fin > collectionEntiere->NombreDeTrajets ( ) )
     {
