@@ -500,49 +500,50 @@ static void restituer(Catalogue &catalogue)
 
         switch (choix)
         {
-        case 1:
-            cout << "Restitution par défaut choisie." << endl;
-            catalogue.restituer(nomFichier);         
-            break;
-        case 2:
-            cout << "Restitution par type de trajets choisie." << endl;
-            TypeTrajet trajetChoisi;
-            trajetChoisi = selectionTypeTrajet();
-            catalogue.restituer(nomFichier, trajetChoisi);
-            break;
-        case 3:
-        {
-            cout << "Restitution selon une ville de départ et/ou d'arrivée choisie." << endl;
-            // TODO : ajout d'une fonction pour séléctionner la ville de départ et d'arrivés
-            string villeDep = "";
-            string villeArr = "";
-
-                cout << "Saisissez la ville de départ. Note: laisser le champs vide si vous ne voulez pas de ville de depart"<<endl;
-                cin >> villeDep;
-
-                if (villeDep == "")
-                {
-                    cout << "Veuillez saisir la ville d'arrivée" << endl;
-                }
-                else
-                {
-                    cout << "Veuillez saisir la ville d'arrivée. Note: laisser le champs vide si vous ne voulez pas de ville de depart" << endl;
-                }
-
-                cin >> villeArr;
-
-                catalogue.restituer(nomFichier, villeDep, villeArr);
-                
+            case 1:
+                cout << "Restitution par défaut choisie." << endl;
+                catalogue.restituer(nomFichier);         
                 break;
+            case 2:
+                cout << "Restitution par type de trajets choisie." << endl;
+                TypeTrajet trajetChoisi;
+                trajetChoisi = selectionTypeTrajet();
+                catalogue.restituer(nomFichier, trajetChoisi);
+                break;
+            case 3:
+            {
+                cout << "Restitution selon une ville de départ et/ou d'arrivée choisie." << endl;
+                // TODO : ajout d'une fonction pour séléctionner la ville de départ et d'arrivés
+                string villeDep = "";
+                string villeArr = "";
+
+                    cout << "Saisissez la ville de départ. Note: laisser le champs vide si vous ne voulez pas de ville de depart"<<endl;
+                    cin >> villeDep;
+
+                    if (villeDep == "")
+                    {
+                        cout << "Veuillez saisir la ville d'arrivée" << endl;
+                    }
+                    else
+                    {
+                        cout << "Veuillez saisir la ville d'arrivée. Note: laisser le champs vide si vous ne voulez pas de ville de depart" << endl;
+                    }
+
+                    cin >> villeArr;
+
+                    catalogue.restituer(nomFichier, villeDep, villeArr);
+                    
+                    break;
             }
             case 4:
+            {
                 cout << "Sauvegarde selon une séléction de trajets par un intervalle choisie." << endl;
 
                 unsigned int debut = saisirIntervalRestitution("debut", 1, 1);
                 unsigned int fin = saisirIntervalRestitution("fin", debut, debut);
                 catalogue.restituer(nomFichier, debut,fin);
                 break;
-
+            }
             default:
             {
                 cout << "Restitution par défaut choisie." << endl;
