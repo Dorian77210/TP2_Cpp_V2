@@ -269,15 +269,15 @@ static TypeTrajet selectionTypeTrajet()
     }
 }
 
-static unsigned int saisirIntervalSauvegarde(string type, unsigned int ValeurDefaut, unsigned int min, unsigned int max)
+static unsigned int saisirIntervalSauvegarde(string type, unsigned int valeurDefault, unsigned int min, unsigned int max)
 {
     string buffer;
-    unsigned int interval = ValeurDefaut;
+    unsigned int interval = valeurDefault;
     cout << "Veuillez saisir l'interval de " << type << " :" << endl;
     cout << "Note: la valeur doit etre comprise entre " << min << " et "
          << max << endl;
 
-    cout << "Note :  En cas de mauvaise saisir, la valeur " << ValeurDefaut << "sera automatiquement choisi " << endl;
+    cout << "Note :  En cas de mauvaise saisir, la valeur " << valeurDefault << "sera automatiquement choisi " << endl;
 
     cin >> buffer;
 
@@ -287,44 +287,44 @@ static unsigned int saisirIntervalSauvegarde(string type, unsigned int ValeurDef
     {
         if(interval > max || interval < min)
         {
-            interval = ValeurDefaut;
-            cout << "Valeur " << ValeurDefaut << "choisie par défaut" << endl;
+            interval = valeurDefault;
+            cout << "Valeur " << valeurDefault << "choisie par défaut" << endl;
         }
         return interval;
     }
     else
     {
-        cout << "Valeur "<< ValeurDefaut << "choisie par défaut" << endl;
+        cout << "Valeur "<< valeurDefault << "choisie par défaut" << endl;
         return interval;
     }
    
 }
 
-static unsigned int saisirIntervalRestitution(string type, unsigned int ValeurDefaut, unsigned int min)
+static unsigned int saisirIntervalRestitution(string type, unsigned int valeurDefault, unsigned int min)
 {
     string buffer;
-    unsigned int interval = ValeurDefaut;
-    cout << "Veuillez saisir l'interval de " << type << " :" << endl;
+    unsigned int interval = valeurDefault;
+    cout << "Veuillez saisir l'intervalle de " << type << " :" << endl;
     cout << "Note: la valeur doit etre supérieur ou égale à " << min << endl;
 
-    cout << "Note :  En cas de mauvaise saisir, la valeur " << ValeurDefaut << "sera automatiquement choisi " << endl;
+    cout << "Note :  En cas de mauvaise saisir, la valeur " << valeurDefault << "sera automatiquement choisi " << endl;
 
     cin >> buffer;
 
-    stringstream intervalSream(buffer);
+    stringstream intervalStream(buffer);
 
-    if (intervalSream >> interval)
+    if (intervalStream >> interval)
     {
         if (interval < min)
         {
-            interval = ValeurDefaut;
-            cout << "Valeur " << ValeurDefaut << "choisie par défaut" << endl;
+            interval = valeurDefault;
+            cout << "Valeur " << valeurDefault << " choisie par défaut" << endl;
         }
         return interval;
     }
     else
     {
-        cout << "Valeur " << ValeurDefaut << "choisie par défaut" << endl;
+        cout << "Valeur " << valeurDefault << " choisie par défaut" << endl;
         return interval;
     }
 }
@@ -352,6 +352,7 @@ static void sauvegarder ( Catalogue & catalogue )
     if ( stream.good ( ) )
     {
         // le fichier existe déjà, on propose à l'utilisateur de l'écraser ou non
+        stream.close();
 
         enTrainDeChoisir = true;
 
@@ -407,7 +408,7 @@ static void sauvegarder ( Catalogue & catalogue )
             } else if ( choix == 2 )
             {
                 cout << "Sauvegarde par type de trajets choisie." << endl;
-                // TODO : ajout d'une fonction pour séléctionner le type de trajet
+
                 TypeTrajet trajetChoisi;
                 trajetChoisi = selectionTypeTrajet();
                 catalogue.Sauvegarder(nomFichier, trajetChoisi);
@@ -415,18 +416,18 @@ static void sauvegarder ( Catalogue & catalogue )
             } else if ( choix == 3 )
             {
                 cout << "Sauvegarde selon une ville de départ et/ou d'arrivée choisie." << endl;
-                cout << "Attention : si les deux villes saisies sont vides, la sauvegarde par défaut sera utilisée" << endl;
-                // TODO : ajout d'une fonction pour séléctionner la ville de départ et d'arrivés
+                cout << "Attention : si les deux villes saisies ont la valeur \"stop\", la sauvegarde par défaut sera utilisée" << endl;
+
                 string depart = "";
                 string arrivee = "";
 
-                cout << "Saisissez la ville de départ. Note: laisser le champs vide si vous ne voulez pas de ville de depart";
+                cout << "Saisissez la ville de départ. Note: saisissez \"stop\" si vous ne voulez pas de ville de depart" << endl;
                 cin >> depart;
 
-                cout << "Saisissez la ville d'arrivée. Note: laisser le champs vide si vous ne voulez pas de ville de depart" << endl;
+                cout << "Saisissez la ville d'arrivée. Note: saisissez \"stop\" vide si vous ne voulez pas de ville de depart" << endl;
                 cin >> arrivee;
 
-                if ( arrivee.empty() && depart.empty() )
+                if ( arrivee == "stop" && depart == "stop" )
                 {
                     catalogue.Sauvegarder( nomFichier );
                 } else 
@@ -473,12 +474,14 @@ static void restituer(Catalogue &catalogue)
     
     while(!stream.good())
     {
-        cout << "Le fichier " << nomFichier << " n'existe pas. Veuillez saisir un autre nom de fichier ?" << endl;
-        stream.open(nomFichier.c_str());
+        cout << "Le fichier " << nomFichier << " n'existe pas. Veuillez saisir un autre nom de fichier." << endl;
         cin >> nomFichier;
+        stream = ifstream ( nomFichier.c_str() );
         cin.clear();
         cin.ignore(80, '\n');
     }
+
+    stream.close();
  
     // restitution 
 
@@ -513,35 +516,35 @@ static void restituer(Catalogue &catalogue)
             case 3:
             {
                 cout << "Restitution selon une ville de départ et/ou d'arrivée choisie." << endl;
-                // TODO : ajout d'une fonction pour séléctionner la ville de départ et d'arrivés
-                string villeDep = "";
-                string villeArr = "";
+                cout << "Attention : si les deux villes saisies ont la valeur \"stop\", la restitution par défaut sera utilisée." << endl;
 
-                    cout << "Saisissez la ville de départ. Note: laisser le champs vide si vous ne voulez pas de ville de depart"<<endl;
-                    cin >> villeDep;
+                string depart = "";
+                string arrivee = "";
 
-                    if (villeDep == "")
-                    {
-                        cout << "Veuillez saisir la ville d'arrivée" << endl;
-                    }
-                    else
-                    {
-                        cout << "Veuillez saisir la ville d'arrivée. Note: laisser le champs vide si vous ne voulez pas de ville de depart" << endl;
-                    }
+                cout << "Saisissez la ville de départ. Note: saisissez \"stop\" si vous ne voulez pas de ville de depart" << endl;
+                cin >> depart;
 
-                    cin >> villeArr;
+                cout << "Saisissez la ville d'arrivée. Note: saisissez \"stop\" vide si vous ne voulez pas de ville de depart" << endl;
 
-                    catalogue.restituer(nomFichier, villeDep, villeArr);
+                cin >> arrivee;
                     
-                    break;
+                if ( arrivee == "stop" && depart == "stop" )
+                {
+                    catalogue.restituer( nomFichier );
+                } else 
+                {
+                    catalogue.restituer(nomFichier, depart, arrivee);
+                }
+                    
+                break;
             }
             case 4:
             {
-                cout << "Sauvegarde selon une séléction de trajets par un intervalle choisie." << endl;
+                cout << "Restitution selon une séléction de trajets par un intervalle choisie." << endl;
 
                 unsigned int debut = saisirIntervalRestitution("debut", 1, 1);
                 unsigned int fin = saisirIntervalRestitution("fin", debut, debut);
-                catalogue.restituer(nomFichier, debut,fin);
+                catalogue.restituer(nomFichier, debut, fin);
                 break;
             }
             default:
