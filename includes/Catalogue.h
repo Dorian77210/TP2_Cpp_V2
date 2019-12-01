@@ -161,10 +161,16 @@ protected:
         unsigned int & nbTrajetsTrouves) const;
 
     void Sauvegarder(string nomFichier, const CollectionTrajets &c);
+    // Mode d'emploi :
     // Cette méthode permet de sauvegarder une collection de trajet dans un
     //fichier
 
     CollectionTrajets* restituerCollectionEntiere(string nomFichier);
+    // Mode d'emploi :
+    // Cette méthode permet de restituer l'ensemble des trajets contenus dans 
+    // le fichier nomFichier. En cas d'erreur de lecture, un nullptr sera 
+    // renvoyé. S'il nya pas d'erreurs, la méthode retournera la collection de trajets
+    // associée au fichier nomFichier.
 
 //----------------------------------------------------- Attributs protégés
     CollectionTrajets _trajets;
