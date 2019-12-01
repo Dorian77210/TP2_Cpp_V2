@@ -112,6 +112,8 @@ public:
     void restituer(string nomFichier, string depart, string arrive);
     void restituer(string nomFichier, unsigned int debut, unsigned int fin);
 
+    unsigned int NombreTrajets();
+
     //------------------------------------------------- Surcharge d'opérateurs
 
     //-------------------------------------------- Constructeurs - destructeur

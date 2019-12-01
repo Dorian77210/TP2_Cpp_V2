@@ -269,21 +269,64 @@ static TypeTrajet selectionTypeTrajet()
     }
 }
 
-static unsigned int saisirInterval(string type, unsigned int ValeurDefaut)
+static unsigned int saisirIntervalSauvegarde(string type, unsigned int ValeurDefaut, unsigned int min, unsigned int max)
 {
     string buffer;
     unsigned int interval = ValeurDefaut;
     cout << "Veuillez saisir l'interval de " << type << " :" << endl;
+    cout << "Note: la valeur doit etre comprise entre " << min << " et "
+         << max << endl;
 
-    cout << "Note :  En cas de mauvais saisir, la valeur " << ValeurDefaut << "sera automatiquement choisi "<<endl;
-    
+    cout << "Note :  En cas de mauvaise saisir, la valeur " << ValeurDefaut << "sera automatiquement choisi " << endl;
+
     cin >> buffer;
 
     stringstream intervalSream(buffer);
 
-    intervalSream >> interval;
+    if(intervalSream >> interval)
+    {
+        if(interval > max || interval < min)
+        {
+            interval = ValeurDefaut;
+            cout << "Valeur " << ValeurDefaut << "choisie par défaut" << endl;
+        }
+        return interval;
+    }
+    else
+    {
+        cout << "Valeur "<< ValeurDefaut << "choisie par défaut" << endl;
+        return interval;
+    }
+   
+}
 
-    return interval;
+static unsigned int saisirIntervalRestitution(string type, unsigned int ValeurDefaut, unsigned int min)
+{
+    string buffer;
+    unsigned int interval = ValeurDefaut;
+    cout << "Veuillez saisir l'interval de " << type << " :" << endl;
+    cout << "Note: la valeur doit etre supérieur ou égale à " << min << endl;
+
+    cout << "Note :  En cas de mauvaise saisir, la valeur " << ValeurDefaut << "sera automatiquement choisi " << endl;
+
+    cin >> buffer;
+
+    stringstream intervalSream(buffer);
+
+    if (intervalSream >> interval)
+    {
+        if (interval < min)
+        {
+            interval = ValeurDefaut;
+            cout << "Valeur " << ValeurDefaut << "choisie par défaut" << endl;
+        }
+        return interval;
+    }
+    else
+    {
+        cout << "Valeur " << ValeurDefaut << "choisie par défaut" << endl;
+        return interval;
+    }
 }
 
 static void sauvegarder ( Catalogue & catalogue )
@@ -395,9 +438,10 @@ static void sauvegarder ( Catalogue & catalogue )
             } else if ( choix == 4 )
             {
                 cout << "Sauvegarde selon une séléction de trajets par un intervalle choisie." << endl;
-                
-                unsigned int debut =  saisirInterval("debut", 0);
-                unsigned int fin = saisirInterval("fin", debut);
+
+                unsigned int debut = saisirIntervalSauvegarde("debut", 1, 1, catalogue.NombreTrajets());
+                unsigned int fin = saisirIntervalSauvegarde("fin", catalogue.NombreTrajets(), debut, catalogue.NombreTrajets());
+
                 catalogue.Sauvegarder(nomFichier, debut, fin);
                 enTrainDeChoisir = false;
             }
@@ -456,54 +500,59 @@ static void restituer(Catalogue &catalogue)
 
         switch (choix)
         {
-        case 1:
+            case 1:
 
-            cout << "Restitution par défaut choisie." << endl;
-            catalogue.restituer(nomFichier);         
-            break;
+                cout << "Restitution par défaut choisie." << endl;
+                catalogue.restituer(nomFichier);         
+                break;
 
-        case 2:
-            cout << "Restitution par type de trajets choisie." << endl;
-            TypeTrajet trajetChoisi;
-            trajetChoisi = selectionTypeTrajet();
-            catalogue.restituer(nomFichier, trajetChoisi);
+            case 2:
+                cout << "Restitution par type de trajets choisie." << endl;
+                TypeTrajet trajetChoisi;
+                trajetChoisi = selectionTypeTrajet();
+                catalogue.restituer(nomFichier, trajetChoisi);
 
-            break;
+                break;
 
-        case 3:
-        {
-            cout << "Restitution selon une ville de départ et/ou d'arrivée choisie." << endl;
-            // TODO : ajout d'une fonction pour séléctionner la ville de départ et d'arrivés
-            string villeDep = "";
-            string villeArr = "";
-
-            cout << "Saisissez la ville de départ. Note: laisser le champs vide si vous ne voulez pas de ville de depart"<<endl;
-            cin >> villeDep;
-
-            if (villeDep == "")
+            case 3:
             {
-                cout << "Veuillez saisir la ville d'arrivée" << endl;
+                cout << "Restitution selon une ville de départ et/ou d'arrivée choisie." << endl;
+                // TODO : ajout d'une fonction pour séléctionner la ville de départ et d'arrivés
+                string villeDep = "";
+                string villeArr = "";
+
+                cout << "Saisissez la ville de départ. Note: laisser le champs vide si vous ne voulez pas de ville de depart"<<endl;
+                cin >> villeDep;
+
+                if (villeDep == "")
+                {
+                    cout << "Veuillez saisir la ville d'arrivée" << endl;
+                }
+                else
+                {
+                    cout << "Veuillez saisir la ville d'arrivée. Note: laisser le champs vide si vous ne voulez pas de ville de depart" << endl;
+                }
+
+                cin >> villeArr;
+
+                catalogue.Sauvegarder(nomFichier, villeDep, villeArr);
+                
+                break;
             }
-            else
+            case 4:
+                cout << "Sauvegarde selon une séléction de trajets par un intervalle choisie." << endl;
+
+                unsigned int debut = saisirIntervalRestitution("debut", 1, 1);
+                unsigned int fin = saisirIntervalRestitution("fin", debut, debut);
+                catalogue.restituer(nomFichier, debut,fin);
+                break;
+
+            default:
             {
-                cout << "Veuillez saisir la ville d'arrivée. Note: laisser le champs vide si vous ne voulez pas de ville de depart" << endl;
+                cout << "Restitution par défaut choisie." << endl;
+                catalogue.Sauvegarder(nomFichier);     
+                break;
             }
-
-            cin >> villeArr;
-
-            catalogue.Sauvegarder(nomFichier, villeDep, villeArr);
-            
-            break;
-        }
-        case 4:
-            cout << "Sauvegarde selon une séléction de trajets par un intervalle choisie." << endl;
-            // TODO : ajout d'une fonction pour séléectionner l'intervalle   
-            break;
-
-        default:
-            cout << "Restitution par défaut choisie." << endl;
-            catalogue.Sauvegarder(nomFichier);     
-            break;
         }
 
     }

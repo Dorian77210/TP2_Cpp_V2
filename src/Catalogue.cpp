@@ -342,6 +342,11 @@ void Catalogue::restituer(string nomFichier, unsigned int debut, unsigned int fi
     delete collectionEntiere;
 }
 
+
+unsigned int Catalogue::NombreTrajets()
+{
+    return this->_trajets.NombreDeTrajets();
+}
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
