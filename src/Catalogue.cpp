@@ -134,8 +134,8 @@ void Catalogue::Sauvegarder(string nomFichier, const CollectionTrajets & collect
     if(monFlux)
     {
         // completer l'entete
-        unsigned int nbTrajetSimple = this->_trajets.GetTotalParType(TRAJET_SIMPLE);
-        unsigned int nbTrajetCompose= this->_trajets.GetTotalParType(TRAJET_COMPOSE);
+        unsigned int nbTrajetSimple = collection.GetTotalParType(TRAJET_SIMPLE);
+        unsigned int nbTrajetCompose = collection.GetTotalParType(TRAJET_COMPOSE);
 
         if ( ! ( monFlux << nbTrajetSimple << " " << nbTrajetCompose << endl ) )
         {
@@ -352,7 +352,19 @@ void Catalogue::restituer(string nomFichier, unsigned int debut, unsigned int fi
 
     if ( fin > collectionEntiere->NombreDeTrajets ( ) )
     {
+        cout << "La valeur du maximum de l'intervalle (" 
+             << fin 
+             << ") est supérieur au nombre de trajets. Le minimum est donc initialisé à"
+             << collectionEntiere->NombreDeTrajets() 
+             << "." 
+             << endl;
         fin = collectionEntiere->NombreDeTrajets ( );
+    }
+
+    if ( debut > collectionEntiere->NombreDeTrajets ( ) )
+    {
+        cout << "La valeur du minimum de l'intervalle (" << debut << ") est supérieur au nombre de trajets. Le minimum est donc initialisé à 1." << endl;
+        debut = 1;
     }
 
     // ajout des trajets souhaités

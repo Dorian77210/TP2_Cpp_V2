@@ -142,6 +142,7 @@ CollectionTrajets CollectionTrajets::GetTrajetsParVilles ( const string & depart
         {
             trajetCourantDepart = trajetCourant->VilleDepart ( );
             trajetCourantArrivee = trajetCourant->VilleArrivee ( );
+
             if ( ( depart.compare ( trajetCourantDepart ) == 0 ) && ( arrivee.compare ( trajetCourantArrivee ) == 0 ) )
             {
                 collectionTrajets.AjouterTrajet ( trajetCourant );
