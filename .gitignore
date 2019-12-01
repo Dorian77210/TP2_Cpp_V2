@@ -1,4 +1,3 @@
-/main
-/main_debug
-obj/*
-.vscode
+.vscode/
+obj/
+vgcore.*

@@ -156,7 +156,7 @@ void Catalogue::Sauvegarder(string nomFichier, const CollectionTrajets & collect
     }
     else
     {
-        cout << "ERREUR: Impossible d'ouvir le fichier" << endl;
+        cerr << "ERREUR: Impossible d'ouvir le fichier" << endl;
     }
 }
 
