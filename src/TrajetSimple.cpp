@@ -74,7 +74,7 @@ TrajetSimple::TrajetSimple (
     moyenDeTransport leMoyenDeTransport
 ) : Trajet(),
     _villeDepart (new char[strlen(laVilleDepart) + 1]),
-    _villeArrivee (new char[strlen(laVilleDepart) + 1]),
+    _villeArrivee (new char[strlen(laVilleArrivee) + 1]),
     _moyenDeTransport (leMoyenDeTransport)
 // Algorithme : Copie les tableau de laVilleDepart et laVilleArrivee 
 {

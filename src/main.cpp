@@ -424,7 +424,7 @@ static void sauvegarder ( Catalogue & catalogue )
                 cout << "Saisissez la ville de départ. Note: saisissez \"stop\" si vous ne voulez pas de ville de depart" << endl;
                 cin >> depart;
 
-                cout << "Saisissez la ville d'arrivée. Note: saisissez \"stop\" vide si vous ne voulez pas de ville de depart" << endl;
+                cout << "Saisissez la ville d'arrivée. Note: saisissez \"stop\" vide si vous ne voulez pas de ville d'arrivée" << endl;
                 cin >> arrivee;
 
                 if ( arrivee == "stop" && depart == "stop" )
