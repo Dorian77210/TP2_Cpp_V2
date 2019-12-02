@@ -126,7 +126,7 @@ void Catalogue::RechercherComplet (
     delete[] uneCombinaison;
 }
 
-void Catalogue::Sauvegarder(string nomFichier, const CollectionTrajets & collection)
+void Catalogue::sauvegarder(string nomFichier, const CollectionTrajets & collection)
 {
     // ouvrir le fichier
     ofstream monFlux(nomFichier.c_str());
@@ -162,22 +162,22 @@ void Catalogue::Sauvegarder(string nomFichier, const CollectionTrajets & collect
 
 void Catalogue::Sauvegarder(string nomFichier)
 {
-    Sauvegarder(nomFichier, this->_trajets);
+    sauvegarder(nomFichier, this->_trajets);
 }
 
 void Catalogue::Sauvegarder(string nomFichier, TypeTrajet type)
 {
-    Sauvegarder(nomFichier, this->_trajets.GetTrajetsParType(type));
+    sauvegarder(nomFichier, this->_trajets.GetTrajetsParType(type));
 }
 
 void Catalogue::Sauvegarder(string nomFichier, string depart, string arrivee)
 {
-    Sauvegarder(nomFichier, this->_trajets.GetTrajetsParVilles(depart, arrivee));
+    sauvegarder(nomFichier, this->_trajets.GetTrajetsParVilles(depart, arrivee));
 }
 
 void Catalogue::Sauvegarder(string nomFichier, unsigned int debut, unsigned int fin)
 {
-    Sauvegarder(nomFichier, this->_trajets.GetTrajetsParIntervalle(debut, fin));
+    sauvegarder(nomFichier, this->_trajets.GetTrajetsParIntervalle(debut, fin));
 }
 
 void Catalogue::Restituer(string nomFichier)

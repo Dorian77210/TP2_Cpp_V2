@@ -162,7 +162,7 @@ protected:
         unsigned int tailleMaxTrajets,
         unsigned int & nbTrajetsTrouves) const;
 
-    void Sauvegarder(string nomFichier, const CollectionTrajets &c);
+    void sauvegarder( string nomFichier, const CollectionTrajets & colelction );
     // Mode d'emploi :
     // Cette méthode permet de sauvegarder une collection de trajet dans un
     //fichier
