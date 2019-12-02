@@ -505,13 +505,13 @@ static void restituer(Catalogue &catalogue)
         {
             case 1:
                 cout << "Restitution par défaut choisie." << endl;
-                catalogue.restituer(nomFichier);         
+                catalogue.Restituer(nomFichier);         
                 break;
             case 2:
                 cout << "Restitution par type de trajets choisie." << endl;
                 TypeTrajet trajetChoisi;
                 trajetChoisi = selectionTypeTrajet();
-                catalogue.restituer(nomFichier, trajetChoisi);
+                catalogue.Restituer(nomFichier, trajetChoisi);
                 break;
             case 3:
             {
@@ -530,10 +530,10 @@ static void restituer(Catalogue &catalogue)
                     
                 if ( arrivee == "stop" && depart == "stop" )
                 {
-                    catalogue.restituer( nomFichier );
+                    catalogue.Restituer( nomFichier );
                 } else 
                 {
-                    catalogue.restituer(nomFichier, depart, arrivee);
+                    catalogue.Restituer(nomFichier, depart, arrivee);
                 }
                     
                 break;
@@ -544,13 +544,13 @@ static void restituer(Catalogue &catalogue)
 
                 unsigned int debut = saisirIntervalRestitution("debut", 1, 1);
                 unsigned int fin = saisirIntervalRestitution("fin", debut, debut);
-                catalogue.restituer(nomFichier, debut, fin);
+                catalogue.Restituer(nomFichier, debut, fin);
                 break;
             }
             default:
             {
                 cout << "Restitution par défaut choisie." << endl;
-                catalogue.restituer(nomFichier);     
+                catalogue.Restituer(nomFichier);     
                 break;
             }
         }

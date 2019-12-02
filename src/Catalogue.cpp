@@ -180,7 +180,7 @@ void Catalogue::Sauvegarder(string nomFichier, unsigned int debut, unsigned int 
     Sauvegarder(nomFichier, this->_trajets.GetTrajetsParIntervalle(debut, fin));
 }
 
-void Catalogue::restituer(string nomFichier)
+void Catalogue::Restituer(string nomFichier)
 {
     CollectionTrajets *collectionAAjouter;
     collectionAAjouter = restituerCollectionEntiere(nomFichier);
@@ -259,7 +259,7 @@ CollectionTrajets* Catalogue::restituerCollectionEntiere(string nomFichier)
     return collectionAAjouter;
 }
 
-void Catalogue::restituer(string nomFichier, TypeTrajet type)
+void Catalogue::Restituer(string nomFichier, TypeTrajet type)
 {
     TypeTrajet typeARetirer = ( type == TRAJET_COMPOSE ) ? TRAJET_SIMPLE : TRAJET_COMPOSE;
     CollectionTrajets *collectionEntiere = restituerCollectionEntiere ( nomFichier );
@@ -290,7 +290,7 @@ void Catalogue::restituer(string nomFichier, TypeTrajet type)
     delete collectionEntiere;
 }
 
-void Catalogue::restituer(string nomFichier, string depart, string arrivee)
+void Catalogue::Restituer(string nomFichier, string depart, string arrivee)
 {
     CollectionTrajets collectionASupprimer;
     CollectionTrajets *collectionEntiere = restituerCollectionEntiere(nomFichier);
@@ -340,7 +340,7 @@ void Catalogue::restituer(string nomFichier, string depart, string arrivee)
     delete collectionEntiere;
 }
 
-void Catalogue::restituer(string nomFichier, unsigned int debut, unsigned int fin)
+void Catalogue::Restituer(string nomFichier, unsigned int debut, unsigned int fin)
 {
     CollectionTrajets *collectionEntiere = restituerCollectionEntiere(nomFichier);
 

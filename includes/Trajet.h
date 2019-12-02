@@ -68,14 +68,14 @@ public:
     // comme par exemple un fichier ou la sortie standard
     // Le paramètre outStream correspond au flux de sortie dans lequel on va écrire
     // Le paramètre trajet est le trajet qui sera écrit dans le flux de sortie
-    friend inline ostream & operator << ( ostream & outStream, const Trajet & trajet )
+    friend ostream & operator << ( ostream & outStream, const Trajet & trajet )
     {
         return outStream << static_cast<string>( trajet );
     }
 
     // Surcharge de l'opérateur += de la classe string
     // Cette méthode permet d'ajouter au string courant la sérialisation du trajet
-    friend inline string operator + ( string data, const Trajet & trajet )
+    friend string operator + ( string data, const Trajet & trajet )
     {
         data += static_cast<string>(trajet);
         return data;

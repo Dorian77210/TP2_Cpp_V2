@@ -105,20 +105,20 @@ public:
     // Cette méthode permet de sauvegarder le catalogue en le filtrant selon
     //une interval [debut fin]
     
-    void restituer(string nomFichier);
+    void Restituer(string nomFichier);
     // Mode d'emploi :
     // Cette méthode permet de restituer l'ensemble des trajets
     // présents dans le fichier nomFichier. Elle fera appel à le méthode
     // restituerCollectionEntiere pour récupérer les données des trajets.
 
-    void restituer(string nomFichier, TypeTrajet type);
+    void Restituer(string nomFichier, TypeTrajet type);
     // Mode d'emploi :
     // Cette méthode permet de restituer les trajets du type donné en paramètre
     // qui proviennent du fichier nomFichier. Cette méthode fera appel
     // à la méthode restituerCollectionEntiere pour récupérer l'ensemble des trajets
     // dans le fichier nomFichier et appliquera ensuite un filtre par rapport au type
     
-    void restituer(string nomFichier, string depart, string arrivee);
+    void Restituer(string nomFichier, string depart, string arrivee);
     // Mode d'emploi :
     // Cette méthode permet de restituer les trajets qui proviennent du fichier 
     // nomFichier en fonction d'un départ et d'une arrivée. Cette méthode fera appel
@@ -126,7 +126,7 @@ public:
     // dans le fichier nomFichier et appliquera ensuite un filtre par rapport
     // au départ et à l'arrivée.
     
-    void restituer(string nomFichier, unsigned int debut, unsigned int fin);
+    void Restituer(string nomFichier, unsigned int debut, unsigned int fin);
     // Mode d'emploi :
     // Cette méthode permet de restituer les trajets qui proviennent du fichier
     // nomFichier en fonction d'un intervalle. Cette méthode fera appel
