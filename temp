@@ -1,6 +1,8 @@
-2 1
-1 1 Lyon;Bordeaux;0
-2 1 Lyon;Paris;2
-3 2 Lyon;Paris;2
+4 1
+1 1 La rochelle;La tour;0
+2 1 Lyon;Bordeaux;0
+3 1 Lyon;Paris;2
+4 2 Lyon;Paris;2
 1 Lyon;Marseille;2
 1 Marseille;Paris;3
+5 1 Auxerre;Lyon;0

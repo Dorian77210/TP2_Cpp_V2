@@ -65,8 +65,10 @@ static void saisirVille (
     unsigned int maxLength, 
     const char * message = "Ville :" )
 {
+    string buffer;
     cout << message << " (taille max: " << maxLength << ")" << endl;
-    cin >> ville;
+    getline(cin, buffer);
+    strncpy(ville, buffer.c_str(), maxLength);
 }
 
 static void saisirMoyenDeTransport ( 
@@ -230,11 +232,6 @@ static void rechercherCompletTrajet ( Catalogue & leCatalogue )
     delete[] trajetsTrouves;
 }
 
-//static void chargerFichier(Catalogue & catalogue )
-//{
-
-//}
-
 static TypeTrajet selectionTypeTrajet()
 {
     string buffer;
@@ -269,7 +266,7 @@ static TypeTrajet selectionTypeTrajet()
     }
 }
 
-static unsigned int saisirIntervalSauvegarde(string type, unsigned int valeurDefault, unsigned int min, unsigned int max)
+static unsigned int saisirIntervalleSauvegarde(string type, unsigned int valeurDefault, unsigned int min, unsigned int max)
 {
     string buffer;
     unsigned int interval = valeurDefault;
@@ -288,13 +285,14 @@ static unsigned int saisirIntervalSauvegarde(string type, unsigned int valeurDef
         if(interval > max || interval < min)
         {
             interval = valeurDefault;
-            cout << "Valeur " << valeurDefault << "choisie par défaut" << endl;
+            cout << "Valeur " << valeurDefault << " choisie par défaut car le choix n'est pas correct." << endl;
         }
+
         return interval;
     }
     else
     {
-        cout << "Valeur "<< valeurDefault << "choisie par défaut" << endl;
+        cout << "Valeur "<< valeurDefault << "choisie par défaut car la saisie n'est pas valide." << endl;
         return interval;
     }
    
@@ -318,13 +316,13 @@ static unsigned int saisirIntervalRestitution(string type, unsigned int valeurDe
         if (interval < min)
         {
             interval = valeurDefault;
-            cout << "Valeur " << valeurDefault << " choisie par défaut" << endl;
+            cout << "Valeur " << valeurDefault << " choisie par défaut car le choix n'est pas correct." << endl;
         }
         return interval;
     }
     else
     {
-        cout << "Valeur " << valeurDefault << " choisie par défaut" << endl;
+        cout << "Valeur " << valeurDefault << " choisie par défaut car la saisie est invalide." << endl;
         return interval;
     }
 }
@@ -384,10 +382,10 @@ static void sauvegarder ( Catalogue & catalogue )
 
     // on propose à l'utilisateur les différentes options de sauvegarde
     cout << "Nous allons procéder à la sauvegarde de votre catalogue. Voici les choix possibles : " << endl
-        << "1. Sans critère de sélection (sauvegarde complète du catalogue)" << endl
-        << "2. Selon le type de trajets (Simple ou Composé)" << endl
-        << "3. Selon la ville de départ et/ou d'arrivée" << endl
-        << "4. Selon une sélection de trajets (sauvegarde des trajets d'une borne inférieure à une borne supérieure)" << endl;
+         << "1. Sans critère de sélection (sauvegarde complète du catalogue)" << endl
+         << "2. Selon le type de trajets (Simple ou Composé)" << endl
+         << "3. Selon la ville de départ et/ou d'arrivée" << endl
+         << "4. Selon une sélection de trajets (sauvegarde des trajets d'une borne inférieure à une borne supérieure)" << endl;
     cout << "Attention, en cas de mauvaise saisie, l'option 1 sera sélectionnée par défaut." << endl;
         
     enTrainDeChoisir = true;
@@ -422,10 +420,11 @@ static void sauvegarder ( Catalogue & catalogue )
                 string arrivee = "";
 
                 cout << "Saisissez la ville de départ. Note: saisissez \"stop\" si vous ne voulez pas de ville de depart" << endl;
-                cin >> depart;
+                getline(cin, depart);
+
 
                 cout << "Saisissez la ville d'arrivée. Note: saisissez \"stop\" vide si vous ne voulez pas de ville d'arrivée" << endl;
-                cin >> arrivee;
+                getline(cin, arrivee);
 
                 if ( arrivee == "stop" && depart == "stop" )
                 {
@@ -440,8 +439,8 @@ static void sauvegarder ( Catalogue & catalogue )
             {
                 cout << "Sauvegarde selon une séléction de trajets par un intervalle choisie." << endl;
 
-                unsigned int debut = saisirIntervalSauvegarde("debut", 1, 1, catalogue.NombreTrajets());
-                unsigned int fin = saisirIntervalSauvegarde("fin", catalogue.NombreTrajets(), debut, catalogue.NombreTrajets());
+                unsigned int debut = saisirIntervalleSauvegarde("debut", 1, 1, catalogue.NombreTrajets());
+                unsigned int fin = saisirIntervalleSauvegarde("fin", catalogue.NombreTrajets(), debut, catalogue.NombreTrajets());
 
                 catalogue.Sauvegarder(nomFichier, debut, fin);
                 enTrainDeChoisir = false;
@@ -465,7 +464,6 @@ static void restituer(Catalogue &catalogue)
 
     cout << "Quel est le nom de votre fichier ? " << endl;
     cin >> nomFichier;
-    cin.clear();
     cin.ignore(80, '\n');
 
     // on check si le fichier existe deja
@@ -475,14 +473,12 @@ static void restituer(Catalogue &catalogue)
     while(!stream.good())
     {
         cout << "Le fichier " << nomFichier << " n'existe pas. Veuillez saisir un autre nom de fichier." << endl;
-        cin >> nomFichier;
+        getline(cin, nomFichier);
+
         stream = ifstream ( nomFichier.c_str() );
-        cin.clear();
-        cin.ignore(80, '\n');
     }
 
     stream.close();
- 
     // restitution 
 
     // on propose à l'utilisateur les différentes options de restution
@@ -522,12 +518,11 @@ static void restituer(Catalogue &catalogue)
                 string arrivee = "";
 
                 cout << "Saisissez la ville de départ. Note: saisissez \"stop\" si vous ne voulez pas de ville de depart" << endl;
-                cin >> depart;
+                getline(cin, depart);
 
                 cout << "Saisissez la ville d'arrivée. Note: saisissez \"stop\" vide si vous ne voulez pas de ville de depart" << endl;
+                getline(cin, arrivee);
 
-                cin >> arrivee;
-                    
                 if ( arrivee == "stop" && depart == "stop" )
                 {
                     catalogue.Restituer( nomFichier );
@@ -571,11 +566,6 @@ int main ()
 {
     int choixMenu;
     Catalogue leCatalogue;
-    /*string to = ("A;Marseille;2");
-    TrajetSimple *t  = new TrajetSimple(to);
-    leCatalogue.AjouterTrajet(t);
-    leCatalogue.Afficher();
-    */
 
     while (true)
     {
@@ -586,13 +576,15 @@ int main ()
         cout << "\t4. Rechercher un trajet" << endl;
         cout << "\t5. Rechercher un trajet (complet)" << endl;
         cout << "\t6. Sauvegarder le catalogue courant" << endl;
-        cout << "\t7. Restituer le catalogue courant" << endl;
+        cout << "\t7. Restituer un catalogue existant" << endl;
         cout << "\t0. Quitter" << endl;
 
         cin >> choixMenu;
         if (cin.eof()) {
             choixMenu = 0;
         }
+
+        cin.ignore(80, '\n');
 
         switch (choixMenu)
         {

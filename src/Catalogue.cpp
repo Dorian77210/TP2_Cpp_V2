@@ -149,8 +149,10 @@ void Catalogue::sauvegarder(string nomFichier, const CollectionTrajets & collect
         for ( unsigned int i ( 1 ); i <= collection.NombreDeTrajets(); ++i)
         {
             monFlux << i << " "; //index
-            monFlux << static_cast<string>(*(collection.TrajetNumero(i)));
+            monFlux << *(collection.TrajetNumero(i));
         }
+
+        cout << "Sauvegarde terminée avec succés." << endl;
 
         monFlux.close();
     }
@@ -205,7 +207,7 @@ CollectionTrajets* Catalogue::restituerCollectionEntiere(string nomFichier)
     stringstream buffer;
     if ( ! ( buffer << monFlux.rdbuf ( ) ) )
     {
-        cerr << "Erreur pendant la lecture du fichier " << nomFichier << endl;
+        cerr << "Erreur pendant la lecture du fichier " << nomFichier << "." << endl;
         monFlux.close();
         delete collectionAAjouter;
         return nullptr;
@@ -288,6 +290,8 @@ void Catalogue::Restituer(string nomFichier, TypeTrajet type)
     collectionAAjouter.Erase ( );
     collectionEntiere->Erase ( );
     delete collectionEntiere;
+    
+    cout << "Restitution terminée." << endl;
 }
 
 void Catalogue::Restituer(string nomFichier, string depart, string arrivee)
@@ -338,6 +342,8 @@ void Catalogue::Restituer(string nomFichier, string depart, string arrivee)
     collectionAAjouter.Erase();
     collectionEntiere->Erase();
     delete collectionEntiere;
+
+    cout << "Restitution terminée." << endl;
 }
 
 void Catalogue::Restituer(string nomFichier, unsigned int debut, unsigned int fin)
@@ -350,20 +356,25 @@ void Catalogue::Restituer(string nomFichier, unsigned int debut, unsigned int fi
         return;
     }
 
+    unsigned int nbrTrajets = collectionEntiere->NombreDeTrajets ( );
+
     if ( fin > collectionEntiere->NombreDeTrajets ( ) )
     {
         cout << "La valeur du maximum de l'intervalle (" 
              << fin 
-             << ") est supérieur au nombre de trajets. Le minimum est donc initialisé à"
-             << collectionEntiere->NombreDeTrajets() 
+             << ") est supérieur au nombre de trajets. Le minimum est donc initialisée à "
+             << nbrTrajets
              << "." 
              << endl;
-        fin = collectionEntiere->NombreDeTrajets ( );
+        fin = nbrTrajets;
     }
 
-    if ( debut > collectionEntiere->NombreDeTrajets ( ) )
+    if ( debut > nbrTrajets )
     {
-        cout << "La valeur du minimum de l'intervalle (" << debut << ") est supérieur au nombre de trajets. Le minimum est donc initialisé à 1." << endl;
+        cout << "La valeur du minimum de l'intervalle (" 
+             << debut 
+             << ") est supérieur au nombre de trajets. Le minimum est donc initialisée à 1." 
+             << endl;
         debut = 1;
     }
 
@@ -380,13 +391,15 @@ void Catalogue::Restituer(string nomFichier, unsigned int debut, unsigned int fi
     }
 
     // suppression des trajets dans l'intervalle ]fin, collectionEntire.NombreTrajets()]
-    for ( unsigned int i ( fin + 1 ); i <= collectionEntiere->NombreDeTrajets ( ); i++ )
+    for ( unsigned int i ( fin + 1 ); i <= nbrTrajets; i++ )
     {
         delete collectionEntiere->TrajetNumero ( i );
     }
 
     collectionEntiere->Erase ( );
     delete collectionEntiere;
+
+    cout << "Restitution terminée." << endl;
 }
 
 

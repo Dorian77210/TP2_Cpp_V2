@@ -64,17 +64,17 @@ public:
     // Elle sera surchargée dans les classes enfants
 
     // Surcharge de l'opérateur de sortie de flux
-    // Cette opérateur permet d'écrire un trajet dans un flux de sortie
-    // comme par exemple un fichier ou la sortie standard
-    // Le paramètre outStream correspond au flux de sortie dans lequel on va écrire
-    // Le paramètre trajet est le trajet qui sera écrit dans le flux de sortie
+    // Cette opérateur permet d'écrire une version sérialisée du trajet courant
+    // dans un flux de sortie comme par exemple un fichier ou la sortie standard
+    // Le paramètre outStream correspond au flux de sortie dans lequel on va écrire.
+    // Le paramètre trajet est le trajet qui sera écrit dans le flux de sortie.
     friend ostream & operator << ( ostream & outStream, const Trajet & trajet )
     {
         return outStream << static_cast<string>( trajet );
     }
 
     // Surcharge de l'opérateur += de la classe string
-    // Cette méthode permet d'ajouter au string courant la sérialisation du trajet
+    // Cette méthode permet d'ajouter à string la sérialisation du trajet courant.
     friend string operator + ( string data, const Trajet & trajet )
     {
         data += static_cast<string>(trajet);

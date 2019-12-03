@@ -84,31 +84,37 @@ public:
 
     void Sauvegarder(string nomFichier);
     // Mode d'emploi :
-    // Permet de sauvegarder l'entièreté du catalogue
-    // cette méthode utilisera la méthode sauvegarder(const Collection& c) afin
-    //de finaliser la sauvegarder dans le fichier ayant pour nom "nomFichier"
+    // Permet de sauvegarder l'entièreté du catalogue.
+    // Cette méthode utilisera la méthode sauvegarder(const Collection & collection) afin
+    // de finaliser la sauvegarde dans le fichier ayant pour nom celui passé en paramètre.
 
     void Sauvegarder(string nomFichier, TypeTrajet type);
     // Mode d'emploi : 
     // Permet de sauvegarder le catalogue en le filtrant selon le type de
-    //trajets
-    //cette méthode utilisera la méthode sauvegarder(const Collection& c) afin
-    //de finaliser la sauvegarde dans le fichier ayant pour nom "nomFichier"
+    // trajets.
+    // Cette méthode utilisera la méthode sauvegarder(const Collection & collection) afin
+    // de finaliser la sauvegarde dans le fichier ayant pour nom celui passé en paramètre.
 
     void Sauvegarder(string nomFichier, string depart, string arrivee);
     // Mode d'emploi :
     // Cette méthode permet de sauvegarder le catalogue en le filtrant selon
-    //le la ville depart et une ville de fin
+    //le la ville depart et une ville de fin.
+    // Cette méthode utilisera la méthode sauvegarder(const Collection & collection) afin
+    // de finaliser la sauvegarde dans le fichier ayant pour nom celui passé en paramètre.
 
     void Sauvegarder(string nomFichier, unsigned int debut, unsigned int fin);
     // Mode d'emploi :
     // Cette méthode permet de sauvegarder le catalogue en le filtrant selon
-    //une interval [debut fin]
+    // l'intervalle [debut fin]. Tous les trajets du catalogue qui ont leur position
+    // dans cette intervalle seront sauvegardés.
+    // Cette méthode utilisera la méthode sauvegarder(const Collection & collection) afin
+    // de finaliser la sauvegarde dans le fichier ayant pour nom celui passé en paramètre.
     
     void Restituer(string nomFichier);
     // Mode d'emploi :
     // Cette méthode permet de restituer l'ensemble des trajets
-    // présents dans le fichier nomFichier. Elle fera appel à le méthode
+    // présents dans le fichier ayant pour nom celui passé en paramètre. 
+    // Elle fera appel à la méthode
     // restituerCollectionEntiere pour récupérer les données des trajets.
 
     void Restituer(string nomFichier, TypeTrajet type);
@@ -116,14 +122,15 @@ public:
     // Cette méthode permet de restituer les trajets du type donné en paramètre
     // qui proviennent du fichier nomFichier. Cette méthode fera appel
     // à la méthode restituerCollectionEntiere pour récupérer l'ensemble des trajets
-    // dans le fichier nomFichier et appliquera ensuite un filtre par rapport au type
+    // dans le fichier passé en paramètre et appliquera ensuite 
+    // un filtre par rapport au type de trajet passé en paramètre.
     
     void Restituer(string nomFichier, string depart, string arrivee);
     // Mode d'emploi :
     // Cette méthode permet de restituer les trajets qui proviennent du fichier 
     // nomFichier en fonction d'un départ et d'une arrivée. Cette méthode fera appel
     // à la méthode restituerCollectionEntiere pour récupérer l'ensemble des trajets
-    // dans le fichier nomFichier et appliquera ensuite un filtre par rapport
+    // dans le fichier passé en paramètre et appliquera ensuite un filtre par rapport
     // au départ et à l'arrivée.
     
     void Restituer(string nomFichier, unsigned int debut, unsigned int fin);
@@ -131,10 +138,12 @@ public:
     // Cette méthode permet de restituer les trajets qui proviennent du fichier
     // nomFichier en fonction d'un intervalle. Cette méthode fera appel
     // à la méthode restituerCollectionEntiere pour récupérer l'ensemble des trajets
-    // dans le fichier nomFichier et appliquera ensuite un filtre par rapport
+    // dans le fichier passé en paramètre et appliquera ensuite un filtre par rapport
     // à l'intervalle.
 
     unsigned int NombreTrajets();
+    // Mode d'emploi :
+    // Permet de récupérer le nombre de trajets qui composent le catalogue courant
 
     //------------------------------------------------- Surcharge d'opérateurs
 
@@ -165,7 +174,7 @@ protected:
     void sauvegarder( string nomFichier, const CollectionTrajets & colelction );
     // Mode d'emploi :
     // Cette méthode permet de sauvegarder une collection de trajet dans un
-    //fichier
+    // fichier passé en paramètre.
 
     CollectionTrajets* restituerCollectionEntiere(string nomFichier);
     // Mode d'emploi :
