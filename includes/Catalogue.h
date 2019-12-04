@@ -143,7 +143,8 @@ public:
 
     unsigned int NombreTrajets();
     // Mode d'emploi :
-    // Permet de récupérer le nombre de trajets qui composent le catalogue courant
+    // Permet de récupérer le nombre de trajets qui composent le catalogue courant.
+    // Elle appelle la méthode NombreTrajets de sa collection de trajets.
 
     //------------------------------------------------- Surcharge d'opérateurs
 
@@ -180,7 +181,7 @@ protected:
     // Mode d'emploi :
     // Cette méthode permet de restituer l'ensemble des trajets contenus dans 
     // le fichier nomFichier. En cas d'erreur de lecture, un nullptr sera 
-    // renvoyé. S'il nya pas d'erreurs, la méthode retournera la collection de trajets
+    // renvoyé. S'il n'y a pas d'erreurs, la méthode retournera la collection de trajets
     // associée au fichier nomFichier.
 
 //----------------------------------------------------- Attributs protégés

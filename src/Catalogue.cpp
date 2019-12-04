@@ -362,7 +362,7 @@ void Catalogue::Restituer(string nomFichier, unsigned int debut, unsigned int fi
     {
         cout << "La valeur du maximum de l'intervalle (" 
              << fin 
-             << ") est supérieur au nombre de trajets. Le minimum est donc initialisée à "
+             << ") est supérieure au nombre de trajets. La valeur du maximum est donc initialisée à "
              << nbrTrajets
              << "." 
              << endl;
@@ -373,7 +373,7 @@ void Catalogue::Restituer(string nomFichier, unsigned int debut, unsigned int fi
     {
         cout << "La valeur du minimum de l'intervalle (" 
              << debut 
-             << ") est supérieur au nombre de trajets. Le minimum est donc initialisée à 1." 
+             << ") est supérieure au nombre de trajets. Le valeur du maximum est donc initialisée à 1." 
              << endl;
         debut = 1;
     }
@@ -407,6 +407,7 @@ unsigned int Catalogue::NombreTrajets()
 {
     return this->_trajets.NombreDeTrajets();
 }
+
 //------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur

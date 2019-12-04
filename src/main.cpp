@@ -75,7 +75,7 @@ static void saisirMoyenDeTransport (
     moyenDeTransport & leMoyen, 
     const char * message = "Moyen de transport :" )
 {
-    int choixTransport;
+    unsigned int choixTransport;
 
     cout << message << endl;
     
@@ -103,17 +103,28 @@ static void saisirMoyenDeTransport (
     afficherMoyenDeTransport(MARCHE);
     cout << endl;
 
-    cin >> choixTransport;
+    cout << "Attention : en cas de mauvaise saisie, le moyen de transport choisi sera le Train." << endl;
 
-    switch (choixTransport)
+    string buffer;
+
+    getline(cin, buffer);
+    stringstream intervalSream(buffer);
+
+    if(intervalSream >> choixTransport)
     {
-        case (1): leMoyen = TRAIN; break;
-        case (2): leMoyen = AUTO; break;
-        case (3): leMoyen = BATEAU; break;
-        case (4): leMoyen = AVION; break;
-        case (5): leMoyen = VELO; break;
-        case (6): leMoyen = MARCHE; break;
-        default: leMoyen = TRAIN; break;
+        switch (choixTransport)
+        {
+            case (1): leMoyen = TRAIN; break;
+            case (2): leMoyen = AUTO; break;
+            case (3): leMoyen = BATEAU; break;
+            case (4): leMoyen = AVION; break;
+            case (5): leMoyen = VELO; break;
+            case (6): leMoyen = MARCHE; break;
+            default: leMoyen = TRAIN; break;
+        }
+    } else
+    {
+        leMoyen = TRAIN;
     }
 }
 
@@ -554,6 +565,7 @@ static void restituer(Catalogue &catalogue)
     else
     {
         cout << "restittution par défaut choisie." << endl;
+        catalogue.Restituer(nomFichier);
         
     }
     
