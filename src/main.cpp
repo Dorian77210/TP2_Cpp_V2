@@ -352,9 +352,7 @@ static void sauvegarder ( Catalogue & catalogue )
     }
 
     cout << "Quel sera le nom de votre fichier ? " << endl;
-    cin >> nomFichier;
-    cin.clear ( );
-    cin.ignore ( 80, '\n' );
+    getline(cin, nomFichier);
 
     // on check si le fichier existe deja
     ifstream stream ( nomFichier.c_str() );
@@ -474,8 +472,8 @@ static void restituer(Catalogue &catalogue)
 
 
     cout << "Quel est le nom de votre fichier ? " << endl;
-    cin >> nomFichier;
-    cin.ignore(80, '\n');
+    getline(cin, nomFichier);
+
 
     // on check si le fichier existe deja
     ifstream stream(nomFichier.c_str());
